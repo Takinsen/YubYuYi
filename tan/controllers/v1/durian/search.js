@@ -10,13 +10,13 @@ export const searchDurian = async (req, res) => {
 
     let query = Durian.find(filter);
 
-    const selectFields = queryBuilder.buildSelect(select);
+    const selectFields = utils.buildSelect(select);
     if (selectFields) query.select(selectFields);
 
-    const sortFields = queryBuilder.buildSort(sort);
+    const sortFields = utils.buildSort(sort);
     if (Object.keys(sortFields).length > 0) query.sort(sortFields);
 
-    const populateFields = queryBuilder.buildPopulate(populate);
+    const populateFields = utils.buildPopulate(populate);
     if (populateFields.length > 0) query.populate(populateFields);
 
     if (limit && !isNaN(limit) && limit > 0) {
