@@ -1,13 +1,13 @@
 import Durian from "../../../models/durianModel.js";
-import { roleQuery } from "../../../constants/roleQuery.js";
 import * as utils from "../../../utils/index.js";
 
 export const searchDurian = async (req, res) => {
   try {
 
     // const { select, populate, sort, limit, page, ...filters } = req.query;
+    const { lang } = req.query;
 
-    const customQuery = roleQuery["farm"];
+    const customQuery = getRoleQuery("" , lang || "th")
     if(!customQuery) return res.status(400).json({ success: false, message: "Invalid Role" }); 
 
     const { select, populate, sort, limit, page, ...filters } = customQuery;
@@ -46,3 +46,20 @@ export const searchDurian = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error", error: error.message });
   }
 };
+
+const getRoleQuery = (role , lang) => {
+    switch(role){
+      case "house":
+        break;
+      case "ministry":
+        break;
+      case "border":
+        break;
+      default:
+        return {
+            select: 'farmId,displayId,variety,status,date',
+            populate: `farmId:name.${lang}`
+        }
+    }
+
+}
