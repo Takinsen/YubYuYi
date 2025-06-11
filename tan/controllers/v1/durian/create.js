@@ -1,13 +1,13 @@
 import Durian from "../../../models/durianModel.js";
 import * as utils from "../../../utils/index.js";
 
-export const registerDurian = async (req, res) => {
+export const createDurian = async (req, res) => {
   try {
-    
+    const durian = await Durian.create(req.body);
 
     return res.status(200).json({
         success: true,
-
+        durian
     });
   } catch (error) {
     console.error(error);

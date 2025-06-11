@@ -1,10 +1,16 @@
 import Durian from "../../../models/durianModel.js";
+import { roleQuery } from "../../../constants/roleQuery.js";
 import * as utils from "../../../utils/index.js";
 
 export const searchDurian = async (req, res) => {
   try {
-    // Extract query parameters
-    const { select, populate, sort, limit, page, ...filters } = req.query;
+
+    // const { select, populate, sort, limit, page, ...filters } = req.query;
+
+    const customQuery = roleQuery["farm"];
+    if(!customQuery) return res.status(400).json({ success: false, message: "Invalid Role" }); 
+
+    const { select, populate, sort, limit, page, ...filters } = customQuery;
 
     let filter = utils.buildFilter(filters);
 

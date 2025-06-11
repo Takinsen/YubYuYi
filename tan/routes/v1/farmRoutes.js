@@ -4,9 +4,8 @@ import * as controllers from "../../controllers/v1/index.js";
 
 const router = Router();
 
-// -------------------------- Durian Routes -------------------------- //
+// -------------------------- Farm Routes -------------------------- //
 
-router.get('/search', controllers.searchDurian);
-router.post('/create', controllers.createDurian);
+router.post('/create', controllers.createFarm);
 
 export default router;
