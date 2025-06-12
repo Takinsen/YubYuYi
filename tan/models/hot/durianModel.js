@@ -2,53 +2,17 @@ import mongoose from "mongoose";
 
 const durianSchema = new mongoose.Schema(
   {
-    farmId: {
+    lotId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Farm",
+      ref: "Lot",
       required: true,
-    },
-    houseId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "House",
-      required: true,
-    },
-    displayId: {
-      type: String,
-      unique: true,
     },
     variety: {
       type: String,
       enum: ["MONTHONG", "KANYAO", "CHANEE", "PUANGMANEE"],
       required: true,
     },
-    status: {
-      type: String,
-      enum: ["harvest", "sorted", "inspected", "shipped"],
-      default: "harvest"
-    },
-    grade: { type: String, default: null },
-    date: {
-      harvestedAt: { type: Date, default: null },
-      sortedAt: { type: Date, default: null },
-      inspectedAt: { type: Date, default: null },
-      shippedAt: { type: Date, default: null },
-    },
-    weight: {
-      approximate: { type: Number, default: null },
-      absolute: { type: Number, default: null },
-    },
-    inspect: {
-      status: {
-        type: String,
-        enum: ["PENDING", "VERIFIED", "REJECT"],
-        default: "PENDING",
-      },
-      note: { type: String, default: null },
-    },
-    palletId: { type: String, default: null },
-    shippingId: { type: String, default: null },
-    importBy: { type: String, default: null },
-    exportBy: { type: String, default: null },
+    harvestAt: { type: Date, default: null },
     image_url: { type: String, default: null },
   },
   {
@@ -97,3 +61,5 @@ durianSchema.pre("save", async function (next) {
 
 const Durian = mongoose.model("Durian", durianSchema);
 export default Durian;
+
+// data[ { key:value , key:value , ... } , { ... } , { ... } ]
