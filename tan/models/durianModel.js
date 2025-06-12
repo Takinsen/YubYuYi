@@ -7,6 +7,11 @@ const durianSchema = new mongoose.Schema(
       ref: "Farm",
       required: true,
     },
+    houseId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "House",
+      required: true,
+    },
     displayId: {
       type: String,
       unique: true,
@@ -39,10 +44,6 @@ const durianSchema = new mongoose.Schema(
         default: "PENDING",
       },
       note: { type: String, default: null },
-    },
-    trackId: {
-      type: String,
-      default: null,
     },
     palletId: { type: String, default: null },
     shippingId: { type: String, default: null },

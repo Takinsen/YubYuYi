@@ -9,7 +9,9 @@ export const searchDurian = async (req, res) => {
     if(["th", "TH", "thai", "THAI"].includes(lang)) lang = "th"
     if(["en", "EN", "eng", "ENG"].includes(lang)) lang = "en"
 
-    const customQuery = getRoleQuery("user" , lang || "th");
+    console.log(req.user.role)
+
+    const customQuery = getRoleQuery(req.user.role || "user" , lang || "th");
     if(!customQuery) return res.status(400).json({ success: false, message: "Invalid Role" }); 
 
     const { select, populate, sort, limit, page, ...filters } = customQuery;
@@ -51,15 +53,29 @@ export const searchDurian = async (req, res) => {
 
 const getRoleQuery = (role , lang) => {
     switch(role){
-      case "house":
-        break;
-      case "ministry":
-        break;
       case "border":
-        break;
+        return {
+          select: '-__v',
+          populate: `farmId:name.${lang};GAP;updatedAt,houseId:name.${lang}`
+        }   
+      case "ministry":
+        return {
+          select: '-__v',
+          populate: `farmId:name.${lang},houseId:name.${lang}`
+        }
+      case "transport":
+        return {
+          select: '-inspect,-__v',
+          populate: `farmId:name.${lang},houseId:name.${lang}`
+        }                     
+      case "house":
+        return {
+          select: '-shippingId,-inspect,-__v',
+          populate: `farmId:name.${lang};GAP;updatedAt,houseId:name.${lang}`
+        }      
       default:
         return {
-            select: 'farmId,displayId,variety,status,date',
+            select: 'displayId,farmId,variety,status,date,image_url',
             populate: `farmId:name.${lang}`
         }
     }

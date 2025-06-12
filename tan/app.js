@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser'
 import authRoutes from "./routes/v1/authRoutes.js";
 import durianRoutes from "./routes/v1/durianRoutes.js";
 import farmRoutes from "./routes/v1/farmRoutes.js";
+import houseRoutes from "./routes/v1/houseRoutes.js";
 
 const app = express();
 
@@ -27,5 +28,6 @@ app.use(cookieParser());
 app.use("/api/v1/user", authRoutes);
 app.use("/api/v1/durian", durianRoutes);
 app.use("/api/v1/farm", farmRoutes);
+app.use("/api/v1/house", houseRoutes);
 
 export default app

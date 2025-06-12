@@ -4,8 +4,8 @@ import * as controllers from "../../controllers/v1/index.js";
 
 const router = Router();
 
-// -------------------------- Farm Routes -------------------------- //
+// -------------------------- House Routes -------------------------- //
 
-router.post('/create', authenticate , authorize("farmer") , controllers.createFarm);
+router.post('/create', authenticate , authorize("house") , controllers.createHouse);
 
 export default router;
