@@ -5,9 +5,11 @@ export const searchDurian = async (req, res) => {
   try {
 
     // const { select, populate, sort, limit, page, ...filters } = req.query;
-    const { lang } = req.query;
+    let { lang } = req.query;
+    if(["th", "TH", "thai", "THAI"].includes(lang)) lang = "th"
+    if(["en", "EN", "eng", "ENG"].includes(lang)) lang = "en"
 
-    const customQuery = getRoleQuery("" , lang || "th")
+    const customQuery = getRoleQuery("user" , lang || "th");
     if(!customQuery) return res.status(400).json({ success: false, message: "Invalid Role" }); 
 
     const { select, populate, sort, limit, page, ...filters } = customQuery;

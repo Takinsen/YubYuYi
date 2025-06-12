@@ -6,9 +6,9 @@ const router = Router();
 
 // -------------------------- authentication Routes -------------------------- //
 
-router.get('/login', controllers.login);
-router.get('/refresh', controllers.refreshToken);
+router.get('/me', authenticate , controllers.getMe);
 router.post('/register', controllers.register);
+router.post('/login', controllers.login);
 router.post('/logout', controllers.logout);
 
 export default router;

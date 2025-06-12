@@ -4,9 +4,11 @@ import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    nameEN: { type: String, required: true },
-    role: { type: String , enum: ["user" , "house" , "ministry" , "border"] , required: true },
+    username: { type: String, required: true, unique: true },
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    role: { type: String , enum: ["farmer" , "house" , "transport" , "ministry" , "border"] , required: true },
+    farmId: { type: mongoose.Schema.Types.ObjectId, ref: "Farm", default: null },
     password: { type: String, required: true },
   },
   {
@@ -18,7 +20,7 @@ const userSchema = new mongoose.Schema(
 
 userSchema.methods.getAccessToken = function(){
     return jwt.sign(
-        { id : this.id , role: this.role , purpose:"access" }, 
+        { id : this.id , role: this.role , farmId: this.farmId , purpose:"access" }, 
         process.env.ACCESS_SECRET,
         { expiresIn: process.env.ACCESS_EXPIRE }
     );
@@ -26,7 +28,7 @@ userSchema.methods.getAccessToken = function(){
 
 userSchema.methods.getRefreshToken = function(){
     return jwt.sign(
-        { id : this.id , role: this.role , purpose:"refresh" }, 
+        { id : this.id , purpose:"refresh" }, 
         process.env.REFRESH_SECRET,
         { expiresIn: process.env.REFRESH_EXPIRE }
     );
