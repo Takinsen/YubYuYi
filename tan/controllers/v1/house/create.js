@@ -1,4 +1,4 @@
-import House from "../../../models/houseModel.js";
+import House from "../../../models/cold/houseModel.js";
 import * as utils from "../../../utils/index.js";
 
 export const createHouse = async (req, res) => {

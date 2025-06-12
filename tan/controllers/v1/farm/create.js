@@ -1,4 +1,4 @@
-import Farm from "../../../models/farmModel.js";
+import Farm from "../../../models/cold/farmModel.js";
 import * as utils from "../../../utils/index.js";
 
 export const createFarm = async (req, res) => {

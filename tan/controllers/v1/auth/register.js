@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-import User from "../../../models/userModel.js";
+import User from "../../../models/cold/userModel.js";
 
 export const register = async (req, res) => {
   try {

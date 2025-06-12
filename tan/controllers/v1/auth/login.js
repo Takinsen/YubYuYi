@@ -1,4 +1,4 @@
-import User from "../../../models/userModel.js";
+import User from "../../../models/cold/userModel.js";
 
 export const login = async (req, res) => {
   try {

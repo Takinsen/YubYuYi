@@ -1,4 +1,4 @@
-import Durian from "../../../models/durianModel.js";
+import Durian from "../../../models/hot/durianModel.js";
 import * as utils from "../../../utils/index.js";
 
 export const updateDurian = async (req, res) => {
