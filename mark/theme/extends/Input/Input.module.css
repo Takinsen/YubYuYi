@@ -1,0 +1,22 @@
+.input {
+  --input-height-md: 43px;
+  --input-width-md: 169px;
+  --input-fz-md: 16px;
+  --input-radius: 10px;
+  --input-padding-x-md: 16px;
+
+  border-radius: var(--input-radius);
+  padding-left: var(--input-padding-x-md);
+  padding-right: var(--input-padding-x-md);
+  font-size: var(--input-fz-md);
+  height: var(--input-height-md);
+  font-weight: bold;
+  border: solid 1px var(--mantine-color-grays-3);
+  background-color: var(--mantine-color-grays-2);
+  color: var(--mantine-color-grays-0)
+}
+
+.input::placeholder {
+  color: var(--mantine-color-grays-4);
+  opacity: 1;
+}

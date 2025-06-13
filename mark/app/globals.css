@@ -22,5 +22,15 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  -webkit-text-stroke-width: 0 !important;
+  font-synthesis: none !important;
+}
+
+.ContainerCardWhite{
+  border-radius: 31px 31px 0px 0px;
+  background-color: white;
+}
+
+.BackdropGreen{
+  background-color: var(--mantine-color-primary-1);
 }
