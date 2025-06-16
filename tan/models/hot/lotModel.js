@@ -1,5 +1,14 @@
 import mongoose from "mongoose";
 
+function generateDisplayId() {
+  const chars = "0123456789";
+  let id = "";
+  for (let i = 0; i < 8; i++) {
+    id += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return id.slice(0, 6) + "-" + id.slice(6);
+};
+
 const lotSchema = new mongoose.Schema(
   {
     displayId: {
@@ -19,7 +28,7 @@ const lotSchema = new mongoose.Schema(
     shippingId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Shipping",
-      required: true,
+      default: null
     },
     status: {
       type: String,
@@ -37,10 +46,12 @@ const lotSchema = new mongoose.Schema(
     },
     weight: {
       approximate: { type: Number, default: null },
-      absolute: { type: Number, default: null },
+      absolute: { type: Number, required: true },
     },
-    grade: { type: String, default: null },
-    palletId: { type: String, default: null },
+    grade: { type: String, required: true },
+    palletId: { type: String, required: true },
+    importBy: { type: String, required: true },
+    exportBy: { type: String, required: true },    
   },
   {
     toJSON: { virtuals: true },
@@ -48,6 +59,21 @@ const lotSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+lotSchema.pre("validate", async function (next) {
+  if (!this.isNew || this.displayId) return next();
+
+  let unique = false;
+  while (!unique) {
+    const candidate = generateDisplayId();
+    const exists = await mongoose.models.Lot.exists({ displayId: candidate });
+    if (!exists) {
+      this.displayId = candidate;
+      unique = true;
+    }
+  }
+  next();
+});
 
 const Lot = mongoose.model("Lot", lotSchema);
 export default Lot;

@@ -1,7 +1,17 @@
 import mongoose from "mongoose";
 
+function generateDisplayId() {
+  const chars = "0123456789";
+  let id = "";
+  for (let i = 0; i < 8; i++) {
+    id += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return id.slice(0, 6) + "-" + id.slice(6);
+};
+
 const durianSchema = new mongoose.Schema(
   {
+    displayId: { type: String, unique: true },
     lotId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Lot",
@@ -22,39 +32,18 @@ const durianSchema = new mongoose.Schema(
   }
 );
 
-function generateDisplayId() {
-  const chars = "0123456789";
-  let id = "";
-  for (let i = 0; i < 8; i++) {
-    id += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return id.slice(0, 6) + "-" + id.slice(6);
-};
+durianSchema.pre("validate", async function (next) {
+  if (!this.isNew || this.displayId) return next();
 
-durianSchema.methods.generateTrackId = function () {
-  const chars = "ABCDEFGHIJKLMONPQRSTUVWXYZ0123456789";
-  let id = "";
-  for (let i = 0; i < 10; i++) {
-    id += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return id.slice(0, 5) + "-" + id.slice(5);
-};
-
-durianSchema.pre("save", async function (next) {
-  if (!this.displayId) {
-    let newId;
-    let exists = true;
-
-    // Loop until we get a unique ID
-    while (exists) {
-      newId = generateDisplayId();
-      const existing = await mongoose.models.Durian.findOne({ displayId: newId });
-      if (!existing) exists = false;
+  let unique = false;
+  while (!unique) {
+    const candidate = generateDisplayId();
+    const exists = await mongoose.models.Durian.exists({ displayId: candidate });
+    if (!exists) {
+      this.displayId = candidate;
+      unique = true;
     }
-
-    this.displayId = newId;
   }
-
   next();
 });
 

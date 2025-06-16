@@ -6,4 +6,6 @@ const router = Router();
 
 // -------------------------- Shipping Routes -------------------------- //
 
+router.post('/create', authenticate , authorize("transport") , controllers.createShipping);
+
 export default router;

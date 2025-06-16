@@ -5,7 +5,7 @@ export { getMe } from "./auth/getMe.js";
 export { logout } from "./auth/logout.js";
 
 // Durian
-export { searchDurian } from "./durian/search.js";
+export { getDurianById } from "./durian/getDurianById.js";
 export { createDurian } from "./durian/create.js";
 
 // Farm

@@ -6,4 +6,6 @@ const router = Router();
 
 // -------------------------- Lot Routes -------------------------- //
 
+router.post('/create', authenticate , authorize("house") , controllers.createLot);
+
 export default router;

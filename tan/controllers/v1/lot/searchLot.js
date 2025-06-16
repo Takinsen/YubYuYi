@@ -1,7 +1,7 @@
 import Lot from "../../../models/hot/lotModel.js";
 import * as utils from "../../../utils/index.js";
 
-export const searchDurian = async (req, res) => {
+export const searchLot = async (req, res) => {
   try {
 
     // const { select, populate, sort, limit, page, ...filters } = req.query;
@@ -56,28 +56,52 @@ const getRoleQuery = (role , lang) => {
       case "border":
         return {
           select: '-__v',
-          populate: `farmId:name.${lang};GAP;updatedAt,houseId:name.${lang}`
+          populate: {
+            populate: {
+              path: "farmId",
+              select: `name.${lang} GAP updatedAt`
+            }
+          }
         }   
       case "ministry":
         return {
-          select: '-__v',
-          populate: `farmId:name.${lang},houseId:name.${lang}`
-        }
+          select: 'displayId status weight inspect grade palletId importBy exportBy createdAt',
+          populate: [
+            {
+              path: "farmId",
+              select: `name.${lang}`
+            },
+          ]
+        }  
       case "transport":
         return {
-          select: '-inspect,-__v',
-          populate: `farmId:name.${lang},houseId:name.${lang}`
+          select: 'displayId status weight inspect grade palletId importBy exportBy createdAt',
+          populate: [
+            {
+              path: "farmId",
+              select: `name.${lang}`
+            },
+          ]
         }                     
       case "house":
         return {
-          select: '-shippingId,-inspect,-__v',
-          populate: `farmId:name.${lang};GAP;updatedAt,houseId:name.${lang}`
-        }      
+          select: 'displayId status weight inspect grade palletId importBy exportBy createdAt',
+          populate: [
+            {
+              path: "farmId",
+              select: `name.${lang}`
+            },
+          ]
+        }    
       default:
         return {
-            select: 'displayId,farmId,variety,status,date,image_url',
-            populate: `farmId:name.${lang}`
-        }
+          select: 'displayId status weight inspect grade palletId importBy exportBy createdAt',
+          populate: [
+            {
+              path: "farmId",
+              select: `name.${lang}`
+            },
+          ]
+        } 
     }
-
 }
