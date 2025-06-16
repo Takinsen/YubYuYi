@@ -1,9 +1,13 @@
 .root {
   --button-height-md: 43px;
+  --button-height-sm: 27px;
   --button-width-md: 169px;
+  --button-width-sm: 72px;
   --button-fz-md: 16px;
+  --button-fz-sm: 12px;
   --button-radius: 10px;
   --button-padding-x-md: 16px;
+  --button-padding-x-sm: 4px;
 
   border-radius: var(--button-radius);
   height: var(--button-height-md);
@@ -12,67 +16,27 @@
   font-weight: bold;
 }
 
-.root[data-variant="green"] {
+.root[data-variant="small"] {
   background-color: var(--mantine-color-primary-0);
-  color: var(--mantine-color-primary-5);
+  color: white;
+  padding-left: var(--button-padding-x-sm);
+  padding-right: var(--button-padding-x-sm);
+  font-size: var(--button-fz-sm);
+  width: var(--button-width-sm);
+  height: var(--button-height-sm);
 }
-.root[data-variant="green"]:hover {
-  background-color: var(--mantine-color-primary-5);
+.root[data-variant="small"]:hover {
+  background-color: var(--mantine-color-primary-0);
   color: white;
 }
 
-.root[data-variant="accent"] {
-  background-color: var(--mantine-color-primary-1);
-  color: white;
-}
-.root[data-variant="accent"]:hover {
-  background-color: var(--mantine-color-primary-1);
-  color: white;
-}
-
-.root[data-variant="disabled"] {
-  background-color: var(--mantine-color-grays-2);
-  color: white;
-}
-.root[data-variant="disabled"]:hover {
-  background-color: var(--mantine-color-grays-2);
-  color: white;
-}
-
-.root[data-variant="focousAccent"] {
-  background-color: var(--mantine-color-primary-1);
-  color: white;
-}
-.root[data-variant="unfocousAccent"] {
-  background-color: var(--mantine-color-primary_ts-1);
-  color: var(--mantine-color-primary-1);;
-}
-
-.root[data-variant="focousGreen"] {
-  background-color: var(--mantine-color-primary-5);
-  color: white;
-}
-.root[data-variant="unfocousGreen"] {
-  background-color: var(--mantine-color-primary_ts-5);
-  color: var(--mantine-color-primary-5);;
-}
-
-.root[data-variant="focousYellow"] {
-  background-color: var(--mantine-color-primary-3);
-  color: white;
-}
-.root[data-variant="unfocousYellow"] {
-  background-color: var(--mantine-color-primary_ts-3);
-  color: var(--mantine-color-primary-3);;
-}
-
-.root[data-variant="line"] {
-  background-color: white;
-  color: var(--mantine-color-primary-0);
-  border: solid 1px var(--mantine-color-primary-0)
-}
-.root[data-variant="line"]:hover {
-  background-color: var(--mantine-color-primary-1);
-  border: none;
-  color: white;
+.root[data-variant="biground"] {
+  background-color: var(--mantine-color-primary-0);
+  width: 56px;
+  height: 56px;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
 }
