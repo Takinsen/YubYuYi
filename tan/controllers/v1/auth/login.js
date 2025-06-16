@@ -5,7 +5,7 @@ export const login = async (req, res) => {
     const { username, password } = req.body;
     if(!username || !password) return res.status(400).json({ success: false , message: "Some field is missing" });
 
-    const user = await User.findOne({ username }).populate("farmId");
+    const user = await User.findOne({ username }).populate("farmId").populate("houseId");
     if (!user) return res.status(404).json({ success: false , message: "User not found" });
 
     const isMatch = await user.matchPassword(password);
