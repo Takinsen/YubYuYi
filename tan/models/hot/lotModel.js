@@ -32,8 +32,8 @@ const lotSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["harvest", "sorted", "inspected", "shipped"],
-      default: "harvest"
+      enum: ["pending", "sorted", "inspected", "shipped"],
+      default: "pending"
     },
     inspect: {
       status: {

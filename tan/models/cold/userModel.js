@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
     username: { type: String, required: true, unique: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
-    role: { type: String , enum: ["farmer" , "house" , "transport" , "ministry" , "border"] , required: true },
+    role: { type: String , enum: ["farmer" , "house" , "ministry" , "border"] , required: true },
     farmId: { type: mongoose.Schema.Types.ObjectId, ref: "Farm", default: null },
     houseId: { type: mongoose.Schema.Types.ObjectId, ref: "House", default: null },
     password: { type: String, required: true },
