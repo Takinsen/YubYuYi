@@ -1,0 +1,62 @@
+.Container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.CircleGreen{
+  width: 35px;
+  height: 35px;
+  border-radius: 20px;
+  background-color: var(--mantine-color-primary-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.CircleBlack{
+  width: 35px;
+  height: 35px;
+  border-radius: 20px;
+  background-color: var(--mantine-color-primary-0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.LineGreen{
+  height: 2px;
+  flex: 1;
+  background-color: var(--mantine-color-primary-1);
+}
+.LineBlack{
+  height: 2px;
+  flex: 1;
+  background-color: var(--mantine-color-primary-0);
+}
+.Icon{
+  width: 24px;
+  height: 24px;
+}
+
+.DateBar{
+  height: 18px;
+  border-radius: 9px;
+  background-color: var(--mantine-color-grays-2);
+  border: solid 1px var(--mantine-color-grays-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Date{
+  flex: 1;
+  font-size: 8px;
+  font-weight: 600;
+  text-align: center;
+  color: #848484;
+}
+.DateSpacer{
+  flex: 1;
+}
