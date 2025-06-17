@@ -1,81 +1,88 @@
+// Scanner.module.tsx
 'use client';
-
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
+import style from './Scanner.module.css';
 
-export default function CustomQrScanner({ onScan }: { onScan: (id: string) => void }) {
-  const scannerRef = useRef<Html5Qrcode | null>(null);
-  const [isScanning, setIsScanning] = useState(false);
+export interface QrScannerHandle {
+  stopScanner: () => Promise<void>;
+}
 
-  const startScanning = async () => {
-    const cameraId = (await Html5Qrcode.getCameras())[0]?.id;
-    if (!cameraId) return alert('No camera found');
+const CustomQrScanner = forwardRef<QrScannerHandle, { onScan(id: string): void }>(
+  ({ onScan }, ref) => {
+    const scannerRef = useRef<Html5Qrcode | null>(null);
 
-    const html5QrCode = new Html5Qrcode('qr-reader');
-    scannerRef.current = html5QrCode;
-
-    html5QrCode.start(
-      cameraId,
-      {
-        fps: 10,
-        qrbox: { width: 250, height: 250 },
-      },
-      (decodedText) => {
+    // expose stopScanner to parent
+    useImperativeHandle(ref, () => ({
+      stopScanner: async () => {
+        if (!scannerRef.current) return;
         try {
-          const url = new URL(decodedText);
-          const id = url.searchParams.get('id');
-          if (id) {
-            onScan(id);
-            stopScanning();
-          }
-        } catch {
-          console.warn('Scanned text is not a valid URL');
+          await scannerRef.current.stop();
+          await scannerRef.current.clear();
+        } catch (e) {
+          console.warn('stopScanner error (ignored):', e);
+        } finally {
+          scannerRef.current = null;
         }
       },
-      (errorMessage) => {
-        // Optional: handle scanning errors
-        console.log('Scan error:', errorMessage);
-      }
-    );
+    }));
 
-    setIsScanning(true);
-  };
+    useEffect(() => {
+      let didCancel = false;
+      (async () => {
+        if (didCancel) return;
+        // Only run on secure context
+        if (!window.isSecureContext) {
+          console.warn('QR Scanner requires HTTPS or localhost.');
+          return;
+        }
 
-  const stopScanning = () => {
-    scannerRef.current?.stop().then(() => {
-      scannerRef.current?.clear();
-      setIsScanning(false);
-    });
-  };
+        try {
+          const cams = await Html5Qrcode.getCameras();
+          if (didCancel || cams.length === 0) return;
+          const back = cams.find((c) =>
+            /back|environment/i.test(c.label)
+          );
+          const id = back?.id ?? cams[0].id;
+          const qr = new Html5Qrcode('qr-reader');
+          scannerRef.current = qr;
 
-  useEffect(() => {
-    return () => {
-      stopScanning();
-    };
-  }, []);
+          await qr.start(
+            id,
+            { fps: 10, qrbox: undefined },
+            (text) => {
+              try {
+                const url = new URL(text);
+                const itemId = url.searchParams.get('id');
+                if (itemId) onScan(itemId);
+              } catch { /* not a URL: ignore */ }
+            },
+            (err) => {
+              /* scan‑error: ignore or log */
+            }
+          );
+        } catch (e) {
+          console.warn('Could not start QR scanner (ignored):', e);
+        }
+      })();
 
-  return (
-    <div className="flex flex-col items-center space-y-4">
-      <div id="qr-reader" className="relative w-[300px] h-[300px] rounded-lg overflow-hidden border border-gray-300">
-        {/* Optional custom overlay */}
-        <div className="absolute inset-0 border-4 border-blue-500 rounded-md pointer-events-none" />
-      </div>
+      return () => {
+        didCancel = true;
+        if (scannerRef.current) {
+          // swallow any errors
+          scannerRef.current
+            .stop()
+            .then(() => scannerRef.current?.clear())
+            .catch(() => {})
+            .finally(() => {
+              scannerRef.current = null;
+            });
+        }
+      };
+    }, [onScan]);
 
-      {!isScanning ? (
-        <button
-          onClick={startScanning}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-        >
-          Start Camera
-        </button>
-      ) : (
-        <button
-          onClick={stopScanning}
-          className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
-        >
-          Stop Camera
-        </button>
-      )}
-    </div>
-  );
-}
+    return <div id="qr-reader" className={style.ScanContainer} />;
+  }
+);
+
+export default CustomQrScanner;

@@ -1,0 +1,16 @@
+.ScanContainer{
+  position: relative;
+  width: calc(100vw - 66px);
+  height: calc(100vw - 66px);
+  aspect-ratio: 1;
+  background-color: aquamarine;
+
+  margin: auto;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+#qr-reader__camera_feed {
+  object-fit: cover;
+  height: 200%;
+}

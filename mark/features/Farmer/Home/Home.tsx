@@ -8,6 +8,11 @@ import Link from "next/link";
 
 const Home = () => {
   const { user } = useAuth();
+
+  if ( !user ) {
+    return;
+  }
+
   return (
     <div className={style.Backdrop}>
       <img className={style.BackdropArt} src="/images/PathBackDrop.svg" />

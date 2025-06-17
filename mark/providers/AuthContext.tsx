@@ -29,9 +29,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (user) {
+      
       if (user?.role) {
         router.push(getRedirectPath(user.role));
       }
+      
       localStorage.setItem('user', JSON.stringify(user));
     } 
   }, [user]);

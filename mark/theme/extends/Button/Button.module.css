@@ -40,3 +40,8 @@
   justify-content: center;
   border-radius: 30px;
 }
+
+.root[data-variant="green-md"] {
+  background-color: var(--mantine-color-primary-1);
+  color: white;
+}
