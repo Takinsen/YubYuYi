@@ -1,10 +1,13 @@
-const getDurianGuest = async (id:string, lang:string) => {
+const getDurianGuest = async (id: string, lang: string, token: string) => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/durian/${id}?lang=${lang}`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    })
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",  
+      },
+      credentials: "include",  
+    });
 
     return await res.json();
   } catch (error) {

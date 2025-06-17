@@ -1,17 +1,44 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import getDurianGuest from "@/api/durian/getDurianGuest";
+import { useAuth } from "@/providers/AuthContext";
+
 type InfoProps = {
   id: string;
 };
 
-import getDurianGuest from "@/api/durian/getDurianGuest";
+export default function Info({ id }: InfoProps) {
+  const { user } = useAuth();
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-export default async function Info({ id }: InfoProps) {
-  const data = await getDurianGuest( id, 'en' );
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (user?.token) {
+          const res = await getDurianGuest(id, "en", user.token);
+          setData(res);
+        }
+      } catch (error) {
+        console.error("Failed to fetch durian info", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id, user?.token]);
 
   return (
     <div>
       <h1>Farmer Info</h1>
       <p>Scanned ID: {id}</p>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <pre>{JSON.stringify(data, null, 2)}</pre>
+      )}
     </div>
   );
 }
