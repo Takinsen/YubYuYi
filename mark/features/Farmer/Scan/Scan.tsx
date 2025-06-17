@@ -20,7 +20,7 @@ export default function Scan() {
 
   const handleContinue = async() =>{
     await scannerRef.current?.stopScanner();
-    router.push(`/farmer/info?id=${encodeURIComponent(id)}`);
+    router.push(`/farmer/info/${encodeURIComponent(id)}`);
   }
 
   const handleBack = () => {
