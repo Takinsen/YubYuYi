@@ -16,6 +16,8 @@ export { createHouse } from "./house/create.js";
 
 // Lot
 export { createLot } from "./lot/create.js";
+export { assignLot } from "./lot/assignLot.js";
+export { editLot } from "./lot/editLot.js";
 
 // Shipping
 export { createShipping } from "./shipping/create.js";
