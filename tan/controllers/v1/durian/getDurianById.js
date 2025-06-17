@@ -134,6 +134,8 @@ export const getDurianById = async (req, res) => {
     const lang = ["th", "thai"].includes(langQuery) ? "th" : "en";
     const role = req.user?.role || "default";
 
+    console.log(req.params.id)
+
     const durian = await Durian.findById(req.params.id)
       .populate({
         path: "lotId",

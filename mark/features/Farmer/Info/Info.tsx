@@ -16,7 +16,9 @@ export default function Info({ id }: InfoProps) {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log(user);
         if (user?.token) {
+          console.log("2222");
           const res = await getDurianGuest(id, "en", user.token);
           setData(res);
         }
@@ -28,7 +30,9 @@ export default function Info({ id }: InfoProps) {
     };
 
     fetchData();
-  }, [id, user?.token]);
+  }, [id, user]);
+
+  
 
   return (
     <div>

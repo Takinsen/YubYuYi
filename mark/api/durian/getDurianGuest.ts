@@ -1,6 +1,7 @@
 const getDurianGuest = async (id: string, lang: string, token: string) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/durian/${id}?lang=${lang}`, {
+    console.log(id);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/durian/${"684f7890e8f98371464cd13a"}?lang=${lang}`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -8,6 +9,8 @@ const getDurianGuest = async (id: string, lang: string, token: string) => {
       },
       credentials: "include",  
     });
+
+    console.log("Success");
 
     return await res.json();
   } catch (error) {

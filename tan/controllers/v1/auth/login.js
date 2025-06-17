@@ -14,9 +14,11 @@ export const login = async (req, res) => {
     // 🔐 Generate tokens
     const accessToken = user.getAccessToken();
 
-    user = { ...user , token: accessToken };
+    const userObj = user.toObject(); // 👈 this strips Mongoose-specific stuff
+    userObj.token = accessToken;
 
-    return res.status(200).json({ success: true, user });
+    return res.status(200).json({ success: true, user: userObj });
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false , message: "Server error", error: error.message });
