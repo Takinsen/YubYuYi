@@ -14,7 +14,7 @@ export const login = async (req, res) => {
     // 🔐 Generate tokens
     const accessToken = user.getAccessToken();
 
-    const userObj = user.toObject(); // 👈 this strips Mongoose-specific stuff
+    const userObj = user.toObject();
     userObj.token = accessToken;
 
     return res.status(200).json({ success: true, user: userObj });
