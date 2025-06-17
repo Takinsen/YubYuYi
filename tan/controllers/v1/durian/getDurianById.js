@@ -105,7 +105,26 @@ const transformDurian = (doc, role, lang) => {
     return result;
   });
 
-  return { status: true, data };
+  const rawStatus = [
+    {
+      harvestedAt: formatDateDMY(doc.harvestAt),
+      status: doc.harvestAt ? "completed" : "",
+    },
+    {
+      sortedAt: formatDateDMY(get(doc, "lotId.createdAt")),
+      status: get(doc, "lotId.createdAt") ? "completed" : "",
+    },
+    {
+      inspectAt: formatDateDMY(get(doc, "lotId.inspect.inspectAt")),
+      status: get(doc, "lotId.inspect.inspectAt") ? "completed" : "",
+    },
+    {
+      pickedAt: formatDateDMY(get(doc, "lotId.shippingId.pickedAt")),
+      status: get(doc, "lotId.shippingId.pickedAt") ? "completed" : "",
+    },
+  ];
+
+  return { status: true, data, timeline: rawStatus };
 };
 
 /* ---------- Controller ---------- */
