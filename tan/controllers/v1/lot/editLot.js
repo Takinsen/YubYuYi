@@ -33,11 +33,14 @@ const filterAllowedFields = (input, allowedFields) => {
 
 export const editLot = async (req, res) => {
   try {
-    const { id, ...updateData } = req.body;
+
+    const id = req.params.id;
     const role = req.user?.role;
 
     const allowedFields = ROLE_FIELD_MAP[role] || [];
-    const filteredUpdate = filterAllowedFields(updateData, allowedFields);
+    const filteredUpdate = filterAllowedFields(req.body, allowedFields);
+
+    filteredUpdate.houseId = req.user.houseId || req.body.houseId;
 
     if (Object.keys(filteredUpdate).length === 0) {
       return res.status(403).json({
@@ -46,7 +49,7 @@ export const editLot = async (req, res) => {
       });
     }
     const lot = await Lot.findByIdAndUpdate(id, filteredUpdate, {
-      new: true,
+      new: true, 
       runValidators: true,
     });
 

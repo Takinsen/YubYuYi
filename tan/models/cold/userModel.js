@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema(
 
 userSchema.methods.getAccessToken = function(){
     return jwt.sign(
-        { id : this.id , role: this.role , farmId: this.farmId , purpose:"access" }, 
+        { id : this.id , role: this.role , farmId: this.farmId , houseId: this.houseId ,purpose:"access" }, 
         process.env.ACCESS_SECRET,
         { expiresIn: process.env.ACCESS_EXPIRE }
     );
