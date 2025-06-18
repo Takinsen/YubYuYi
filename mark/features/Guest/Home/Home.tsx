@@ -11,6 +11,8 @@ import LoginButton from "@/components/loginButton/LoginButton";
 import DataField from "@/components/dataField/DataField";
 import { Button } from "@mantine/core";
 import { useRouter } from "next/navigation";
+import DataBar from "./components/DataBar/DataBar";
+import DataBox from "./components/DataBox/DataBox";
 
 type InfoProps = {
   id: string;
@@ -70,6 +72,7 @@ export default function Home({ id }: InfoProps) {
       <img className={style.BackdropArt} src="/images/PathBackDrop.svg" />
       <div className={style.BackdropShade} />
       <img className={style.Logo} src="/images/LogoWhite.svg" />
+      <div className={style.subWhiteText}>Certified, Fresh<br/> Thai Durian</div>
       <div className={style.LoginButtonContainer}>
         <LoginButton />
       </div>
@@ -80,19 +83,27 @@ export default function Home({ id }: InfoProps) {
           <p>Loading...</p>
         ) : (
           <div className={style.dataContainer}>
-            <DataField data={data.data} />
+            <img className={style.coverImageActive} src="/images/DurianYellow.svg"/>
+            <DataBar passed={true} text={"Certified for Good Agricultural Practice"}/>
+            <DataBar passed={data.timeline[2].start === "completed"} text={"Passed official export inspection"}/>
+            <div className={style.boxContainer}>
+              <DataBox title="Farm" text={data.data.farmName} iconPath="/icons/tractorGray.svg"/>
+              <DataBox title="Variant" text={data.data.variety} iconPath="/icons/branchGray.svg"/>
+            </div>
+            <div className={style.boxContainer}>
+              <DataBox title="Grade" text={data.data.grade} iconPath="/icons/badgeGray.svg"/>
+              <DataBox title="Harvested" text={data.data.harvestAt} iconPath="/icons/badgeGray.svg"/>
+            </div>
           </div>
         )}
       </div>
 
-      <div className={style.ButtonContainer}>
-        <Button onClick={handleBack}>{"<-"} ย้อนกลับ</Button>
         <div className={style.scanContainer}>
             <Button onClick={handleScan} variant="biground">
               <img className={style.scanIcon} src="/icons/scanWhite.svg"/>
             </Button>
         </div>
-      </div>
+
     </div>
   );
 }
