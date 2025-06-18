@@ -8,15 +8,27 @@ import CheckpontBar from "@/components/checkpointBar/CheckpontBar";
 import formatData from "@/utils/formatCheckpointData";
 import LogoRole from "@/components/logoRole/LogoRole";
 import LogoutButton from "@/components/logoutButton/LogoutButton";
+import DataField from "@/components/dataField/DataField";
+import { Button } from "@mantine/core";
+import { useRouter } from 'next/navigation';
 
 type InfoProps = {
   id: string;
 };
 
 export default function Info({ id }: InfoProps) {
+  const router = useRouter();
   const { user } = useAuth();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+
+  const handleBack = () => {
+    router.push('/farmer/home');
+  }
+
+  const handleReScan = () => {
+    router.push('/farmer/scan');
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,13 +63,19 @@ export default function Info({ id }: InfoProps) {
       </div>
       <div className={style.ContainerCard}>
         <CheckpontBar {...formatData(data.timeline)}/>
-      <h1>Farmer Info</h1>
-      <p>Scanned ID: {id}</p>
+
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <pre>{JSON.stringify(data, null, 2)}</pre>
+        <div className={style.dataContainer}>
+          <DataField data={data.data}/>
+        </div>
       )}
+      </div>
+
+      <div className={style.ButtonContainer}>
+        <Button onClick={handleBack}>{'<-'} ย้อนกลับ</Button>
+        <Button  variant="green-md" onClick={handleReScan}>สแกนอีกครั้ง</Button>
       </div>
     </div>
   );

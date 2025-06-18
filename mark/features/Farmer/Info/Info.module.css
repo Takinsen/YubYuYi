@@ -108,3 +108,25 @@
   height: 24px;
   flex-shrink: 0;
 }
+.dataContainer{
+  padding-top: 36px;
+  height: calc(100% - 140px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 10px, black 50px, black calc(100% - 60px), transparent calc(100% - 10px));
+  mask-image: linear-gradient(to bottom, transparent 10px, black 50px, black calc(100% - 60px), transparent calc(100% - 10px));
+  
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  overflow-y: scroll;
+
+}
+
+.ButtonContainer{
+  position: absolute;
+  bottom: 30px;
+  left: 33px;
+  right: 33px;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
