@@ -23,11 +23,11 @@ export default function Info({ id }: InfoProps) {
   const [loading, setLoading] = useState(true);
 
   const handleBack = () => {
-    router.push('/farmer/home');
+    router.push('/distributer/home');
   }
 
   const handleReScan = () => {
-    router.push('/farmer/scan');
+    router.push('/distributer/scan/infoscan');
   }
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function Info({ id }: InfoProps) {
         <img className={style.BackdropArt} src="/images/PathBackDrop.svg" />
       <div className={style.BackdropShade} />
       <div className={style.LogoContainer}>
-        <LogoRole text={"farmer"} />
+        <LogoRole text={"distributer"} />
       </div>
       <div className={style.LogoutButtonContainer}>
         <LogoutButton />
