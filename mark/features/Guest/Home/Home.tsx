@@ -60,7 +60,7 @@ export default function Home({ id }: InfoProps) {
         <div className={style.ContainerCard}>
            <div className={style.Title}>Want to know about this Durian?</div>
            <div className={style.DurianLineContainer}>
-           <img className={style.DurianLine} src="/images/durianLine.svg" />
+           <img className={style.DurianLine} src="/images/DurianLine.svg" />
            </div>
            <div className={style.Instruction}>Scan Qr using the button below</div>
           <div className={style.scanContainer}>
