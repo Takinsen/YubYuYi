@@ -1,8 +1,9 @@
 import React from 'react'
+import Scan from '@/features/Guest/Scan/Scan'
 
 const page = () => {
   return (
-    <div>page</div>
+    <Scan />
   )
 }
 

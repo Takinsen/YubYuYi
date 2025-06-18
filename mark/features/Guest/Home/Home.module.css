@@ -25,6 +25,17 @@
   text-align: center;
   font-weight: 600;
   margin-bottom: 24px;
+  color: var(--mantine-color-primary-0);
+}
+.Instruction{
+  font-size: 14px;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: var(--mantine-color-grays-1);
+  background-color: var(--mantine-color-grays-2);
+  padding: 8px;
+  border-radius: 20px;
 }
 .BackdropShade{
   position: absolute;
@@ -142,4 +153,14 @@
 .coverImageActive{
   width: 100%;
   margin-top: -30px;
+}
+
+.DurianLine{
+  height: 300px;
+  flex-shrink: 0;
+}
+.DurianLineContainer{
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

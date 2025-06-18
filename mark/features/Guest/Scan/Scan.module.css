@@ -13,9 +13,10 @@
   bottom: 0;
   left: 0;
   right: 0;
-  top: 213px;
+  top: 117px;
   box-sizing: border-box;
   padding: 33px;
+  overflow: hidden;
 }
 .BackdropArt{
   width: 100vw;
@@ -25,15 +26,18 @@
   text-align: center;
   font-weight: 600;
   margin-bottom: 24px;
-  color: var(--mantine-color-primary-0);
 }
-.BackButton{
+.ActionContainer{
   position: absolute;
-  top : 20px;
+  bottom: 83px;
   left: 33px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--mantine-color-primary-0);
+  right: 33px;
+}
+.BackButtonContainer{
+  position: absolute;
+  bottom: 30px;
+  left: 33px;
+  right: 33px;
 }
 .BackdropShade{
   position: absolute;
@@ -45,11 +49,15 @@
   filter: blur(16px);
   opacity: 63%;
 }
-.Logo{
+.LogoContainer{
   position: absolute;
-  top: 74px;
-  width: 230.39px;
-  left: calc(50% - 115.195px);
+  top: 48px;
+  left: 33px;
+}
+.LogoutButtonContainer{
+  position: absolute;
+  right: 33px;
+  top: 54px;
 }
 .subWhiteText{
   font-size: 12px;
@@ -79,4 +87,37 @@
 }
 .Button{
   margin-top: 16px;
+}
+.SearchIcon{
+  margin-left: 10px;
+}
+.devider{
+  height: 1px;
+  background-color: var(--mantine-color-grays-3);
+  margin-top: 24px;
+  margin-left: -33px;
+  margin-right: -33px;
+}
+.farmName{
+  font-size: 10px;
+  position: absolute;
+  color: var(--mantine-color-primary-0);
+  top: 0px;
+  left: 33px;
+  right: 33px;
+  top: 8px;
+  text-align: center;
+}
+.scanContainer{
+  position: absolute;
+  bottom: 36px;
+  left: 0px;
+  right: 0px;
+  display: flex;
+  justify-content: center;
+}
+.scanIcon{
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 }

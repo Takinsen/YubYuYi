@@ -29,7 +29,7 @@ export default function Home({ id }: InfoProps) {
   };
 
   const handleScan = () => {
-    router.push("/farmer/scan");
+    router.push("/guest/scan");
   };
 
   useEffect(() => {
@@ -58,6 +58,11 @@ export default function Home({ id }: InfoProps) {
           <LoginButton />
         </div>
         <div className={style.ContainerCard}>
+           <div className={style.Title}>Want to know about this Durian?</div>
+           <div className={style.DurianLineContainer}>
+           <img className={style.DurianLine} src="/images/durianLine.svg" />
+           </div>
+           <div className={style.Instruction}>Scan Qr using the button below</div>
           <div className={style.scanContainer}>
             <Button onClick={handleScan} variant="biground">
               <img className={style.scanIcon} src="/icons/scanWhite.svg"/>
@@ -85,7 +90,7 @@ export default function Home({ id }: InfoProps) {
           <div className={style.dataContainer}>
             <img className={style.coverImageActive} src="/images/DurianYellow.svg"/>
             <DataBar passed={true} text={"Certified for Good Agricultural Practice"}/>
-            <DataBar passed={data.timeline[2].start === "completed"} text={"Passed official export inspection"}/>
+            <DataBar passed={data.timeline[2].status === "completed"} text={"Passed official export inspection"}/>
             <div className={style.boxContainer}>
               <DataBox title="Farm" text={data.data.farmName} iconPath="/icons/tractorGray.svg"/>
               <DataBox title="Variant" text={data.data.variety} iconPath="/icons/branchGray.svg"/>
