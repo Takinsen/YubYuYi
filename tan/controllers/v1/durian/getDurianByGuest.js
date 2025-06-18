@@ -19,48 +19,13 @@ const formatDateDMY = (iso) => {
   }
 };
 
-/* ---------- Key Translations ---------- */
-const KEY_MAP = {
-  displayId:      { th: "รหัสติดตาม",            en: "Tracking No." },
-  status:         { th: "สถานะ",               en: "Status" },
-  farmName:       { th: "ชื่อสวน",              en: "Origin" },
-  harvestAt:      { th: "วันที่เก็บเกี่ยว",         en: "Harvested Date" },
-  variety:        { th: "พันธุ์ทุเรียน",           en: "Variety" },
-  houseName:      { th: "ชื่อล้ง",               en: "Processor" },
-  sortedAt:       { th: "วันที่คัดแยก",           en: "Sorted and Packed Date" },
-  weight:         { th: "น้ำหนักสุทธิ",           en: "Weight" },
-  grade:          { th: "เกรดคุณภาพ",          en: "Grade" },
-  pallet:         { th: "หมายเลขพาเลท",        en: "Pallet No." },
-  import:         { th: "ผู้นำเข้า",              en: "Importer" },
-  export:         { th: "ผู้ส่งออก",              en: "Exporter" },
-  inspectedAt:    { th: "วันที่ตรวจสอบ",           en: "Inspected From Thailand Date" },
-  shippedAt:      { th: "วันที่ขนส่ง",             en: "Shipped Date" },
-  inspectStatus:  { th: "สถานะการตรวจสอบ",     en: "Inspect Status" },
-  inspectAt:      { th: "วันที่ขนส่ง",            en: "Inspect Date" },
-  reason:         { th: "เหตุผล",               en: "Reason" },
-};
-
-const tKey = (key, lang) => KEY_MAP[key]?.[lang] ?? key;
-
 /* ---------- Field Configurations ---------- */
 const FIELD_ESSENTIAL = [
-  { displayId: "displayId", status: "lotId.status" },
   {
     farmName: "lotId.farmId.name.{lang}",
     harvestAt: { path: "harvestAt", format: formatDateDMY },
     variety: "variety",
-  },
-  {
-    houseName: "lotId.houseId.name.{lang}",
-    sortedAt: { path: "lotId.createdAt", format: formatDateDMY },
-    weight: {
-      path: "lotId.weight.absolute",
-      format: (v, _doc, lang) => v != null ? `${v} ${lang === "th" ? "กก." : "kg"}` : null,
-    },
     grade: "lotId.grade",
-    pallet: "lotId.palletId",
-    import: "lotId.importBy",
-    export: "lotId.exportBy",
   }
 ];
 
@@ -86,7 +51,7 @@ const transformDurian = (doc, lang) => {
     for (const [key, descriptor] of Object.entries(group)) {
       let value = resolveValue(descriptor, doc, lang);
       if (value === null || value === undefined || value === "") value = "-";
-      data[tKey(key, lang)] = value;
+      data[key] = value;
     }
   });
 
