@@ -7,7 +7,7 @@ const router = Router();
 // -------------------------- Durian Routes -------------------------- //
 
 router.get('/:id', authenticate , controllers.getDurianById);
-router.get('/guest/:id', authenticate , controllers.getDurianByGuest);
+router.get('/guest/:id', controllers.getDurianByGuest);
 router.post('/create', authenticate , controllers.createDurian);
 
 export default router;
