@@ -32,8 +32,8 @@ const lotSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["pending", "sorted", "inspected", "shipped"],
-      default: "pending"
+      enum: ["sorting", "transporting", "inspecting", "arriving"],
+      default: "sorting"
     },
     inspect: {
       status: {
@@ -48,10 +48,9 @@ const lotSchema = new mongoose.Schema(
       approximate: { type: Number, default: null },
       absolute: { type: Number, required: true },
     },
+    transportAt: { type: Date, default: null }, 
     grade: { type: String, required: true },
-    palletId: { type: String, required: true },
-    importBy: { type: String, required: true },
-    exportBy: { type: String, required: true },    
+    palletId: { type: String, required: true },  
   },
   {
     toJSON: { virtuals: true },

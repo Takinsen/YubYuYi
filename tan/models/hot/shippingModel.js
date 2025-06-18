@@ -12,7 +12,7 @@ function generateDisplayId() {
 const shippingSchema = new mongoose.Schema(
   {
     displayId: { type: String, unique: true },
-    pickedAt: { type: Date,   required: true },
+    arrivedAt: { type: Date,   required: true },
     licensePlate: { type: String, required: true },
     importBy: { type: String, required: true },
     exportBy: { type: String, required: true },   

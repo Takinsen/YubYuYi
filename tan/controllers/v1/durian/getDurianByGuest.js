@@ -26,7 +26,7 @@ const FIELD_ESSENTIAL = [
     variety: "variety",
     grade: "lotId.grade",
     harvestAt: { path: "harvestAt", format: formatDateDMY },
-    shippingAt: { path: "lotId.shippingId.pickedAt", format: formatDateDMY }
+    shippingAt: { path: "lotId.shippingId.arrivedAt", format: formatDateDMY }
   }
 ];
 
@@ -58,20 +58,20 @@ const transformDurian = (doc, lang) => {
 
   const rawStatus = [
     {
-      harvestedAt: formatDateDMY(doc.harvestAt),
-      status: doc.harvestAt ? "completed" : "",
-    },
-    {
       sortedAt: formatDateDMY(get(doc, "lotId.createdAt")),
       status: get(doc, "lotId.createdAt") ? "completed" : "",
     },
     {
-      inspectAt: formatDateDMY(get(doc, "lotId.inspect.inspectAt")),
+      transportedAt: formatDateDMY(get(doc, "lotId.transportAt")),
+      status: get(doc, "lotId.transportAt") ? "completed" : "",
+    },
+    {
+      inspectedAt: formatDateDMY(get(doc, "lotId.inspect.inspectAt")),
       status: get(doc, "lotId.inspect.inspectAt") ? "completed" : "",
     },
     {
-      pickedAt: formatDateDMY(get(doc, "lotId.shippingId.pickedAt")),
-      status: get(doc, "lotId.shippingId.pickedAt") ? "completed" : "",
+      arrivedAt: formatDateDMY(get(doc, "lotId.shippingId.arrivedAt")),
+      status: get(doc, "lotId.shippingId.arrivedAt") ? "completed" : "",
     },
   ];
 
