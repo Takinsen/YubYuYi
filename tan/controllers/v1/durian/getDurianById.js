@@ -1,5 +1,7 @@
-import mongoose from "mongoose";
 import Durian from "../../../models/hot/durianModel.js";
+import FIELD_MAP from "../../../constants/field.js";
+import LOT_STATUS from "../../../constants/lotStatus.js";
+import VARIETY from "../../../constants/variety.js";
 
 /* ---------- Helpers ---------- */
 const get = (obj, path, fallback = null) =>
@@ -19,36 +21,23 @@ const formatDateDMY = (iso) => {
   }
 };
 
-/* ---------- Key Translations ---------- */
-const KEY_MAP = {
-  displayId:      { th: "รหัสติดตาม",            en: "Tracking No." },
-  status:         { th: "สถานะ",               en: "Status" },
-  farmName:       { th: "ชื่อสวน",              en: "Origin" },
-  harvestAt:      { th: "วันที่เก็บเกี่ยว",         en: "Harvested Date" },
-  variety:        { th: "พันธุ์ทุเรียน",           en: "Variety" },
-  houseName:      { th: "ชื่อล้ง",               en: "Processor" },
-  sortedAt:       { th: "วันที่คัดแยก",           en: "Sorted and Packed Date" },
-  weight:         { th: "น้ำหนักสุทธิ",           en: "Weight" },
-  grade:          { th: "เกรดคุณภาพ",          en: "Grade" },
-  pallet:         { th: "หมายเลขพาเลท",        en: "Pallet No." },
-  import:         { th: "ผู้นำเข้า",              en: "Importer" },
-  export:         { th: "ผู้ส่งออก",              en: "Exporter" },
-  inspectedAt:    { th: "วันที่ตรวจสอบ",           en: "Inspected From Thailand Date" },
-  shippedAt:      { th: "วันที่ขนส่ง",             en: "Shipped Date" },
-  inspectStatus:  { th: "สถานะการตรวจสอบ",     en: "Inspect Status" },
-  inspectAt:      { th: "วันที่ขนส่ง",            en: "Inspect Date" },
-  reason:         { th: "เหตุผล",               en: "Reason" },
-};
-
-const tKey = (key, lang) => KEY_MAP[key]?.[lang] ?? key;
+const tKey = (key, lang) => FIELD_MAP[key]?.[lang] ?? key;
 
 /* ---------- Field Configurations ---------- */
 const COMMON_GROUP = [
-  { displayId: "displayId", status: "lotId.status" },
+  { displayId: "displayId", 
+    status: { 
+      path: "lotId.status", 
+      format: (v, _doc, lang) => LOT_STATUS[v]?.[lang] ?? v,
+    } 
+  },
   {
     farmName: "lotId.farmId.name.{lang}",
     harvestAt: { path: "harvestAt", format: formatDateDMY },
-    variety: "variety",
+    variety: {
+      path: "variety",
+      format: (v, _doc, lang) => VARIETY[v]?.[lang] ?? v,
+    },
   },
   {
     houseName: "lotId.houseId.name.{lang}",
@@ -72,7 +61,7 @@ const INSPECT_GROUP = [
   }
 ];
 
-const FIELD_MAP = {
+const ROLE_MAP = {
   default: COMMON_GROUP,
   ministry: [...COMMON_GROUP, ...INSPECT_GROUP],
   border: [...COMMON_GROUP, ...INSPECT_GROUP],
@@ -93,7 +82,7 @@ const resolveValue = (desc, doc, lang) => {
 };
 
 const transformDurian = (doc, role, lang) => {
-  const sections = FIELD_MAP[role] || FIELD_MAP.default;
+  const sections = ROLE_MAP[role] || ROLE_MAP.default;
 
   const data = sections.map((group) => {
     const result = {};

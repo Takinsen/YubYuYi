@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Durian from "../../../models/hot/durianModel.js";
+import VARIETY from "../../../constants/variety.js";
 
 /* ---------- Helpers ---------- */
 const get = (obj, path, fallback = null) =>
@@ -23,7 +24,10 @@ const formatDateDMY = (iso) => {
 const FIELD_ESSENTIAL = [
   {
     farmName: "lotId.farmId.name.{lang}",
-    variety: "variety",
+    variety: {
+      path: "variety",
+      format: (v, _doc, lang) => VARIETY[v]?.[lang] ?? v,
+    },
     grade: "lotId.grade",
     harvestAt: { path: "harvestAt", format: formatDateDMY },
     shippingAt: { path: "lotId.shippingId.arrivedAt", format: formatDateDMY }
