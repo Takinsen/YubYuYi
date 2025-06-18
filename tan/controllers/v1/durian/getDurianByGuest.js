@@ -23,9 +23,10 @@ const formatDateDMY = (iso) => {
 const FIELD_ESSENTIAL = [
   {
     farmName: "lotId.farmId.name.{lang}",
-    harvestAt: { path: "harvestAt", format: formatDateDMY },
     variety: "variety",
     grade: "lotId.grade",
+    harvestAt: { path: "harvestAt", format: formatDateDMY },
+    shippingAt: { path: "lotId.shippingId.pickedAt", format: formatDateDMY }
   }
 ];
 
