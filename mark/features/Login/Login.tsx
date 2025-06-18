@@ -13,6 +13,7 @@ const Login = () => {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  
   const handleLogin = async () => {
     const res = await login(username, password);
     if (res.success && res.user) {
@@ -21,6 +22,10 @@ const Login = () => {
     console.log('User logged in:', res.user);
     console.log('Local user', localStorage.getItem("user"));
     }
+  }
+
+  const handleBack = async () => {
+    router.push("/")
   }
 
   return (
@@ -32,6 +37,7 @@ const Login = () => {
       <div className={style.subWhiteText}>Powered by</div>
       <div className={style.ContainerCard}>
         <h2 className={style.Title}>Hello Agian!</h2>
+        <div onClick={handleBack} className={style.BackButton}>{'<-'} Back</div>
         <div className={style.InputLable}>Username</div>
         <TextInput
         value={username}

@@ -1,11 +1,13 @@
-import Home from "@/features/Home/Home";
-import Login from "@/features/Login/Login";
-import Scan from "@/features/Farmer/Scan/Scan";
+'use client';
+
+import { useSearchParams } from 'next/navigation';
+import Home from '@/features/Guest/Home/Home';
 
 export default function HomePage() {
-  return (
-    <div>
-      <Login/>
-    </div>
-  );
+  const params = useSearchParams();
+  const id = params.get('id');
+
+  if (!id) return <Home id={''} />;
+
+  return <Home id={id} />;
 }

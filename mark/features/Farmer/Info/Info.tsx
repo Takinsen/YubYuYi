@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import getDurianGuest from "@/api/durian/getDurianGuest";
+import getDurian from "@/api/durian/getDurian";
 import { useAuth } from "@/providers/AuthContext";
 import style from "./Info.module.css";
 import CheckpontBar from "@/components/checkpointBar/CheckpontBar";
@@ -36,7 +36,7 @@ export default function Info({ id }: InfoProps) {
         console.log(user);
         if (user?.token) {
           console.log("2222");
-          const res = await getDurianGuest(id, "en", user.token);
+          const res = await getDurian(id, "en", user.token);
           setData(res);
         }
       } catch (error) {

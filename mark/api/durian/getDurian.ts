@@ -1,9 +1,10 @@
-const getDurianGuest = async (id: string, lang: string) => {
+const getDurian = async (id: string, lang: string, token: string) => {
   try {
     console.log(id);
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/durian/guest/${id}?lang=${lang}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/durian/${id}?lang=${lang}`, {
       method: "GET",
       headers: {
+        "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json",  
       },
       credentials: "include",  
@@ -18,4 +19,4 @@ const getDurianGuest = async (id: string, lang: string) => {
   }
 }
 
-export default getDurianGuest;
+export default getDurian;
