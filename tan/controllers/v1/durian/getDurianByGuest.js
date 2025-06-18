@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import Durian from "../../../models/hot/durianModel.js";
 import VARIETY from "../../../constants/variety.js";
 
