@@ -1,13 +1,20 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Home from '@/features/Guest/Home/Home';
 
-export default function HomePage() {
+function HomeWithParams() {
   const params = useSearchParams();
   const id = params.get('id');
 
-  if (!id) return <Home id={''} />;
+  return <Home id={id ?? ''} />;
+}
 
-  return <Home id={id} />;
+export default function HomePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeWithParams />
+    </Suspense>
+  );
 }
