@@ -23,8 +23,8 @@
 .Title{
   font-size: 24px;
   text-align: center;
-  font-weight: 600;
-  margin-bottom: 24px;
+  font-weight: 800;
+  margin-bottom: 30px;
 }
 .BackdropShade{
   position: absolute;
@@ -98,45 +98,15 @@
 .scanContainer{
   position: absolute;
   bottom: 36px;
-  left: 33px;
-  right: 33px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-}
-.tabContainer{
-  position: absolute;
-  bottom: 36px;
   left: 0px;
   right: 0px;
   display: flex;
   justify-content: center;
-  gap: 60px;
 }
 .scanIcon{
   width: 24px;
   height: 24px;
   flex-shrink: 0;
-}
-
-.Header{
-  color: var(--mantine-color-grays-0);
-  font-size: 18px;
-  font-weight: 800;
-}
-.headerContainer{
-  margin-top: 24px;
-  position: relative;
-}
-.addButtonContainer{
-  position: absolute;
-  right: 0px;
-  top: 0px;
-}
-.plusIcon{
-  width: 15px;
-  height: 15px;
 }
 
 .dataContainer{
@@ -151,4 +121,19 @@
 
   overflow-y: scroll;
 
+}
+.ActionContainer{
+  position: absolute;
+  bottom: 83px;
+  left: 33px;
+  right: 33px;
+}
+.ButtonContainer{
+  position: absolute;
+  bottom: 30px;
+  left: 33px;
+  right: 33px;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
 }
