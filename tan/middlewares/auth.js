@@ -37,7 +37,7 @@ export const authenticate = async (req, res, next) => {
         .json({ success: false, message: "Access Denied: User not found." });
 
     req.user = user;
-    req.user.type = decoded.type;
+    console.log(user)
     next();
   } catch (error) {
     console.log("Token authentication error :", error);

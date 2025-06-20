@@ -1,6 +1,7 @@
 import Durian from "../../../models/hot/durianModel.js";
 import FIELD_MAP from "../../../constants/field.js";
 import LOT_STATUS from "../../../constants/lotStatus.js";
+import PRODUCT_TYPE from "../../../constants/productType.js";
 import VARIETY from "../../../constants/variety.js";
 
 /* ---------- Helpers ---------- */
@@ -26,25 +27,35 @@ const tKey = (key, lang) => FIELD_MAP[key]?.[lang] ?? key;
 /* ---------- Field Configurations ---------- */
 const COMMON_GROUP = [
   { displayId: "displayId", 
-    status: { 
-      path: "lotId.status", 
-      format: (v, _doc, lang) => LOT_STATUS[v]?.[lang] ?? v,
-    } 
+    status: { path: "lotId.status", format: (v, _doc, lang) => LOT_STATUS[v]?.[lang] ?? v } 
   },
   {
     farmName: "lotId.farmId.name.{lang}",
     harvestAt: { path: "harvestAt", format: formatDateDMY },
-    variety: {
-      path: "variety",
-      format: (v, _doc, lang) => VARIETY[v]?.[lang] ?? v,
-    },
+    variety: { path: "lotId.variety", format: (v, _doc, lang) => VARIETY[v]?.[lang] ?? v },
   },
   {
     houseName: "lotId.houseId.name.{lang}",
     sortedAt: { path: "lotId.createdAt", format: formatDateDMY },
-    weight: {
-      path: "lotId.weight.absolute",
+    weight_net: {
+      path: "lotId.weight.net",
       format: (v, _doc, lang) => v != null ? `${v} ${lang === "th" ? "กก." : "kg"}` : null,
+    },
+    weight_gross: {
+      path: "lotId.weight.gross",
+      format: (v, _doc, lang) => v != null ? `${v} ${lang === "th" ? "กก." : "kg"}` : null,
+    },
+    type: { 
+      path: "lotId.type", 
+      format: (v, _doc, lang) => PRODUCT_TYPE[v]?.[lang] ?? v
+    },
+    verify: { 
+      path: "lotId.verify", 
+      format: (v, _doc, lang) => {
+        if (v == null) return lang === "th" ? "ไม่ทราบ" : "Unknown";
+        const isYes = !!v;
+        return lang === "th" ? (isYes ? "ใช่" : "ไม่ใช่") : (isYes ? "Yes" : "No");
+      }
     },
     grade: "lotId.grade",
     pallet: "lotId.palletId",

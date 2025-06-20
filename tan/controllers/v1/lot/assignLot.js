@@ -4,43 +4,27 @@ import Lot from "../../../models/hot/lotModel.js";
 
 export const assignLot = async (req, res) => {
   try {
-    const { duriansId, lotId } = req.body;
+    const { displayId , lotId } = req.body;
 
-    if (!Array.isArray(duriansId) || duriansId.length === 0 || !lotId) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "duriansId[] and lotId are required",
-        });
-    }
-    if (
-      !duriansId.every((id) => mongoose.Types.ObjectId.isValid(id)) ||
-      !mongoose.Types.ObjectId.isValid(lotId)
-    ) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid Mongo ObjectId supplied" });
-    }
+    if (!mongoose.Types.ObjectId.isValid(lotId)) 
+      return res.status(400).json({ success: false, message: "Invalid Mongo ObjectId supplied" });
+    
 
     const lotExists = await Lot.exists({ _id: lotId });
-    if (!lotExists) {
-      return res.status(404).json({ success: false, message: "Lot not found" });
-    }
+    if (!lotExists) return res.status(404).json({ success: false, message: "Lot not found" });
 
-    const updateResult = await Durian.updateMany(
-      { _id: { $in: duriansId } },
-      { $set: { lotId } }
+    const durian = await Durian.findOneAndUpdate(
+      { displayId },           
+      { $set: { lotId }}, 
+      {
+        new: true,        
+        upsert: true, 
+        runValidators: true,
+        setDefaultsOnInsert: true,
+      }
     );
 
-    const durians = await Durian.find({ _id: { $in: duriansId } });
-
-    return res.status(200).json({
-      success: true,
-      matched: updateResult.matchedCount,
-      modified: updateResult.modifiedCount,
-      durians,
-    });
+    return res.status(200).json({ success: true , durian });
   } catch (error) {
     console.error(error);
     return res

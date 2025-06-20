@@ -30,6 +30,16 @@ const lotSchema = new mongoose.Schema(
       ref: "Shipping",
       default: null
     },
+    variety: {
+      type: String,
+      enum: ["MONTHONG", "KANYAO", "CHANEE", "PUANGMANEE"],
+      required: true,
+    },
+    type: {
+      type: String,
+      enum: ["FRESH", "FREEZE"],
+      required: true
+    },
     status: {
       type: String,
       enum: ["sorting", "transporting", "inspecting", "arriving"],
@@ -45,9 +55,15 @@ const lotSchema = new mongoose.Schema(
       inspectAt: { type: Date, default: null },
     },
     weight: {
-      approximate: { type: Number, default: null },
-      absolute: { type: Number, required: true },
+      net: { type: Number, required: true },
+      gross: { type: Number, required: true },
     },
+    size: {
+      width: { type: Number, required: true },
+      length: { type: Number, required: true }, 
+      height: { type: Number, required: true },    
+    },
+    verify: { type: Boolean, default: false },
     transportAt: { type: Date, default: null }, 
     grade: { type: String, required: true },
     palletId: { type: String, required: true },  
@@ -59,20 +75,20 @@ const lotSchema = new mongoose.Schema(
   }
 );
 
-lotSchema.pre("validate", async function (next) {
-  if (!this.isNew || this.displayId) return next();
+// lotSchema.pre("validate", async function (next) {
+//   if (!this.isNew || this.displayId) return next();
 
-  let unique = false;
-  while (!unique) {
-    const candidate = generateDisplayId();
-    const exists = await mongoose.models.Lot.exists({ displayId: candidate });
-    if (!exists) {
-      this.displayId = candidate;
-      unique = true;
-    }
-  }
-  next();
-});
+//   let unique = false;
+//   while (!unique) {
+//     const candidate = generateDisplayId();
+//     const exists = await mongoose.models.Lot.exists({ displayId: candidate });
+//     if (!exists) {
+//       this.displayId = candidate;
+//       unique = true;
+//     }
+//   }
+//   next();
+// });
 
 const Lot = mongoose.model("Lot", lotSchema);
 export default Lot;

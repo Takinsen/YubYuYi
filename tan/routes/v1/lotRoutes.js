@@ -8,7 +8,6 @@ const router = Router();
 
 router.post('/create', authenticate , authorize("house") , controllers.createLot);
 router.put('/assign', authenticate , authorize("house") , controllers.assignLot);
-router.put('/unassign', authenticate , authorize("house") , controllers.unassignLot);
 router.put('/edit/:id', authenticate , authorize("house" , "transport" , "ministry") , controllers.editLot);
 
 export default router;

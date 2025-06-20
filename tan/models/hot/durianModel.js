@@ -11,17 +11,8 @@ function generateDisplayId() {
 
 const durianSchema = new mongoose.Schema(
   {
-    displayId: { type: String, unique: true },
-    lotId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Lot",
-      required: true,
-    },
-    variety: {
-      type: String,
-      enum: ["MONTHONG", "KANYAO", "CHANEE", "PUANGMANEE"],
-      required: true,
-    },
+    displayId: { type: String, unique: true, required:true },
+    lotId: { type: mongoose.Schema.Types.ObjectId, ref: "Lot", required: true },
     harvestAt: { type: Date, default: null },
     image_url: { type: String, default: null },
   },
@@ -32,20 +23,20 @@ const durianSchema = new mongoose.Schema(
   }
 );
 
-durianSchema.pre("validate", async function (next) {
-  if (!this.isNew || this.displayId) return next();
+// durianSchema.pre("validate", async function (next) {
+//   if (!this.isNew || this.displayId) return next();
 
-  let unique = false;
-  while (!unique) {
-    const candidate = generateDisplayId();
-    const exists = await mongoose.models.Durian.exists({ displayId: candidate });
-    if (!exists) {
-      this.displayId = candidate;
-      unique = true;
-    }
-  }
-  next();
-});
+//   let unique = false;
+//   while (!unique) {
+//     const candidate = generateDisplayId();
+//     const exists = await mongoose.models.Durian.exists({ displayId: candidate });
+//     if (!exists) {
+//       this.displayId = candidate;
+//       unique = true;
+//     }
+//   }
+//   next();
+// });
 
 
 const Durian = mongoose.model("Durian", durianSchema);
