@@ -10,12 +10,14 @@ export { getDurianByGuest } from "./durian/getDurianByGuest.js";
 export { createDurian } from "./durian/create.js";
 
 // Farm
+export { searchFarm } from "./farm/searchFarm.js";
 export { createFarm } from "./farm/create.js";
 
 // House
 export { createHouse } from "./house/create.js";
 
 // Lot
+export { myLot } from "./lot/myLot.js";
 export { createLot } from "./lot/create.js";
 export { assignLot } from "./lot/assignLot.js";
 export { editLot } from "./lot/editLot.js";

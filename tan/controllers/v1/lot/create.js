@@ -3,6 +3,7 @@ import * as utils from "../../../utils/index.js";
 
 export const createLot = async (req, res) => {
   try {
+    req.body.houseId = req.user.houseId || req.body.houseId;
     const lot = await Lot.create(req.body);
 
     return res.status(200).json({

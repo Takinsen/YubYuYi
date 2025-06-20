@@ -6,6 +6,7 @@ const router = Router();
 
 // -------------------------- Farm Routes -------------------------- //
 
+router.get('/search', authenticate , authorize("house") , controllers.searchFarm);
 router.post('/create', authenticate , authorize("farmer") , controllers.createFarm);
 
 export default router;

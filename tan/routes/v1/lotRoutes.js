@@ -6,6 +6,7 @@ const router = Router();
 
 // -------------------------- Lot Routes -------------------------- //
 
+router.get('/mine', authenticate , authorize("farmer" , "house") , controllers.myLot);
 router.post('/create', authenticate , authorize("house") , controllers.createLot);
 router.put('/assign', authenticate , authorize("house") , controllers.assignLot);
 router.put('/edit/:id', authenticate , authorize("house" , "transport" , "ministry") , controllers.editLot);
