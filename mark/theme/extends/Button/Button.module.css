@@ -29,6 +29,15 @@
   background-color: var(--mantine-color-primary-0);
   color: white;
 }
+.root[data-variant="green-small"] {
+  background-color: var(--mantine-color-primary-1);
+  color: white;
+  padding-left: var(--button-padding-x-sm);
+  padding-right: var(--button-padding-x-sm);
+  font-size: var(--button-fz-sm);
+  width: 98px;
+  height: var(--button-height-sm);
+}
 
 .root[data-variant="biground"] {
   background-color: var(--mantine-color-primary-0);
@@ -40,6 +49,27 @@
   justify-content: center;
   border-radius: 30px;
 }
+.root[data-variant="green-biground"] {
+  background-color: var(--mantine-color-primary-1);
+  width: 56px;
+  height: 56px;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+}
+.root[data-variant="gray-biground"] {
+  background-color: var(--mantine-color-grays-0);
+  width: 56px;
+  height: 56px;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+}
+
 
 .root[data-variant="green-md"] {
   background-color: var(--mantine-color-primary-1);

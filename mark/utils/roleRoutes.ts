@@ -4,7 +4,7 @@ export const getRedirectPath = (role: string) => {
     case 'farmer':
       return '/farmer/home';
     case 'house':
-      return '/house/home';
+      return '/distributer/home';
     case 'transport':
       return '/transport/home';
     case 'ministry':
