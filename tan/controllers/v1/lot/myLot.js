@@ -38,6 +38,7 @@ export const myLot = async (req, res) => {
       const { farmId, ...rest } = lot;
       return {
         ...rest,
+        farmId: farmId._id,
         farmName: farmId?.name?.[lang],
         farmGAP: farmId?.GAP,
       };
