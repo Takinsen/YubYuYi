@@ -13,7 +13,7 @@ const lotSchema = new mongoose.Schema(
   {
     displayId: {
       type: String,
-      unique: true,
+      default: null
     },
     farmId: {
       type: mongoose.Schema.Types.ObjectId,
