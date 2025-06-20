@@ -4,25 +4,12 @@ import { createTheme,
          mergeMantineTheme,
          DEFAULT_THEME,
          rem,
-         CSSVariablesResolver, } from '@mantine/core';
+         CSSVariablesResolver,
+         Select, } from '@mantine/core';
 import ButtonExtend from  './extends/Button/index';
 import InputExtend from './extends/Input';
 import MenuExtend from './extends/Menu';
-
-import { Inter } from 'next/font/google';
-import { Noto_Sans_Thai } from 'next/font/google';
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-});
-
-const notoThai = Noto_Sans_Thai({
-  subsets: ['thai'],
-  variable: '--font-noto-thai',
-  display: 'swap',
-});
+import SelectExtend from './extends/Select';
 
 export const resolver: CSSVariablesResolver = (theme) => ({
   variables: {
@@ -96,6 +83,7 @@ export const themeOverride = createTheme({
     Button: ButtonExtend,
     Input: InputExtend,
     Menu: MenuExtend,
+    Select: SelectExtend,
   }
 
 });

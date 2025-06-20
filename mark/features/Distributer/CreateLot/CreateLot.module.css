@@ -72,6 +72,12 @@
 .TextInput{
   margin-bottom: 20px;
 }
+.InputGroup{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
 .Button{
   margin-top: 16px;
 }

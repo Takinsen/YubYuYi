@@ -5,11 +5,30 @@ import LogoRole from "@/components/logoRole/LogoRole";
 import LogoutButton from "@/components/logoutButton/LogoutButton";
 import { useAuth } from "@/providers/AuthContext";
 import Link from "next/link";
+import getLot from "@/api/lot/getLot";
+import { use, useEffect, useState } from "react";
+
 
 const Home = () => {
   const { user } = useAuth();
+  const [lots, setLots] = useState<any>([]);
 
-  if (!user) {
+  useEffect(() => {
+    const fetchLots = async () => {
+    try{
+      if (user?.token) {
+        const res = await getLot(user.token)
+        setLots(res.lots);
+      } 
+    } catch (error) {
+      console.error("Failed to fetch lot data", error);
+    }
+  }
+
+    fetchLots();
+  }, [user]);
+
+   if (!user) {
     return;
   }
 
@@ -48,33 +67,25 @@ const Home = () => {
           </div>
         </div>
         <div className={style.dataContainer}>
-          Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
-          faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi
-          pretium tellus duis convallis. Tempus leo eu aenean sed diam urna
-          tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.
-          Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut
-          hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent
-          per conubia nostra inceptos himenaeos. Lorem ipsum dolor sit amet
-          consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-          pellentesque sem placerat. In id cursus mi pretium tellus duis
-          convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus
-          fringilla lacus nec metus bibendum egestas. Iaculis massa nisl
-          malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class
-          aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos
-          himenaeos. Lorem ipsum dolor sit amet consectetur adipiscing elit.
-          Quisque faucibus ex sapien vitae pellentesque sem placerat. In id
-          cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
-          urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum
-          egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut
-          hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent
-          per conubia nostra inceptos himenaeos. Lorem ipsum dolor sit amet
-          consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-          pellentesque sem placerat. In id cursus mi pretium tellus duis
-          convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus
-          fringilla lacus nec metus bibendum egestas. Iaculis massa nisl
-          malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class
-          aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos
-          himenaeos.
+          {lots.length > 0 ? (
+            lots.map((lot:any) => (
+              <Link key={lot._id} href={`/distributer/info/${lot._id}`}>
+                <div className={style.lotCard}>
+                  <div className={style.lotId}>{lot._id}</div>
+                  <div className={style.lotInfo}>
+                    <div className={style.lotFarmId}>
+                      ฟาร์ม: {lot.farmId.name}
+                    </div>
+                    <div className={style.lotVariety}>
+                      พันธุ์: {lot.variety}
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))
+          ) : (
+            <div className={style.noData}>ไม่มีข้อมูลล็อตสินค้า</div>
+          )}
         </div>
 
         <div className={style.scanContainer}>
