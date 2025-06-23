@@ -6,6 +6,7 @@ import LogoutButton from "@/components/logoutButton/LogoutButton";
 import { useAuth } from "@/providers/AuthContext";
 import Link from "next/link";
 import getLot from "@/api/lot/getLot";
+import Lot from "./components/lot/Lot";
 import { use, useEffect, useState } from "react";
 
 
@@ -18,7 +19,8 @@ const Home = () => {
     try{
       if (user?.token) {
         const res = await getLot(user.token)
-        setLots(res.lots);
+  
+        setLots(res.lots.reverse());
       } 
     } catch (error) {
       console.error("Failed to fetch lot data", error);
@@ -69,18 +71,18 @@ const Home = () => {
         <div className={style.dataContainer}>
           {lots.length > 0 ? (
             lots.map((lot:any) => (
-              <Link key={lot._id} href={`/distributer/info/${lot._id}`}>
-                <div className={style.lotCard}>
-                  <div className={style.lotId}>{lot._id}</div>
-                  <div className={style.lotInfo}>
-                    <div className={style.lotFarmId}>
-                      ฟาร์ม: {lot.farmId.name}
-                    </div>
-                    <div className={style.lotVariety}>
-                      พันธุ์: {lot.variety}
-                    </div>
-                  </div>
-                </div>
+              <Link key={lot._id} href={`/distributer/lotinfo/${lot._id}`}>
+                <Lot
+                  lot={{
+                    status: lot.status,
+                    lotId: lot._id,
+                    farmId: lot.farmId,
+                    farmName: lot.farmName,
+                    variety: lot.variety,
+                    createdAt: lot.createdAt,
+                    displayId: lot.displayId,
+                  }}
+                />
               </Link>
             ))
           ) : (
