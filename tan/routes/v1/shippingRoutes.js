@@ -6,6 +6,8 @@ const router = Router();
 
 // -------------------------- Shipping Routes -------------------------- //
 
-router.post('/create', authenticate , authorize("transport") , controllers.createShipping);
+router.get('/mine', authenticate , authorize("house") , controllers.myShipping);
+router.put('/edit/:id', authenticate , authorize("house") , controllers.editShipping);
+router.post('/create', authenticate , authorize("house") , controllers.createShipping);
 
 export default router;

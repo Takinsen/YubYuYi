@@ -20,7 +20,10 @@ export { createHouse } from "./house/create.js";
 export { myLot } from "./lot/myLot.js";
 export { createLot } from "./lot/create.js";
 export { assignLot } from "./lot/assignLot.js";
+export { unassignLot } from "./lot/unassignLot.js";
 export { editLot } from "./lot/editLot.js";
 
 // Shipping
+export { myShipping } from "./shipping/mine.js";
 export { createShipping } from "./shipping/create.js";
+export { editShipping } from "./shipping/editShipping.js";

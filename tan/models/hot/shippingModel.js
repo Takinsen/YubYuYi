@@ -12,6 +12,11 @@ function generateDisplayId() {
 const shippingSchema = new mongoose.Schema(
   {
     displayId: { type: String, unique: true },
+    status: {
+      type: String,
+      enum: ["pending", "waiting", "exporting"],
+      default: "pending",
+    },
     arrivedAt: { type: Date,   required: true },
     licensePlate: { type: String, required: true },
     importBy: { type: String, required: true },
