@@ -5,7 +5,7 @@ const ROLE_FIELD_MAP = {
   border: [],
   ministry: ["inspect.status", "inspect.note", "inspect.inspectAt"],
   transport: ["status", "status", "shippingId"],
-  house: ["status", "grade", "weight.approximate", "weight.absolute", "palletId", "importBy", "exportBy"],
+  house: ["displayId", "status", "grade", "weight.approximate", "weight.absolute", "palletId", "importBy", "exportBy"],
   farmer: [],
 };
 
