@@ -1,8 +1,10 @@
-const assignDurian = async (lotId: string, displayId: string): Promise<void> => {
+const assignDurian = async (lotId: string, displayId: string, token: string): Promise<void> => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/durian/assign`, {
-      method: "POST",
+    console.log("lot:", lotId, "display:", displayId)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/lot/assign`, {
+      method: "PUT",
       headers: {
+        "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       credentials: "include",

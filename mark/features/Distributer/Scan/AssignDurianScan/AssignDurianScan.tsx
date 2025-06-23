@@ -8,6 +8,7 @@ import LogoutButton from "@/components/logoutButton/LogoutButton";
 import QrScanner, { QrScannerHandle } from '@/components/Scanner/Scanner';
 import { Button } from '@mantine/core';
 import assignDurian from '@/api/lot/assignDurian';
+import { useAuth } from "@/providers/AuthContext";
 
 type AssignProps = {
   lotId: string;
@@ -15,6 +16,7 @@ type AssignProps = {
 
 export default function AssignDurianScan({ lotId }: AssignProps) {
   const router = useRouter();
+  const { user } = useAuth();
   const scannerRef = useRef<QrScannerHandle>(null);
   const [id, setId] = useState('');
 
@@ -25,9 +27,9 @@ export default function AssignDurianScan({ lotId }: AssignProps) {
 
   const handleContinue = async() =>{
     await scannerRef.current?.stopScanner();
-    const res = await assignDurian(lotId, id);
+    const res = await assignDurian(lotId, id, user.token);
     console.log(res)
-    //router.push(`/distributer/${encodeURIComponent(id)}`);
+    router.push(`/distributer/lotinfo/${encodeURIComponent(lotId)}`);
   }
 
   const handleBack = () => {
