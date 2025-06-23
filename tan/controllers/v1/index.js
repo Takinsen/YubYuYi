@@ -20,6 +20,7 @@ export { unassignFromLot } from "./durian/unassignFromLot.js";
 
 // Lot
 export { myLot } from "./lot/myLot.js";
+export { getContents } from "./lot/getContents.js";
 export { createLot } from "./lot/create.js";
 export { editLot } from "./lot/editLot.js";
 
