@@ -53,8 +53,7 @@ export const editLot = async (req, res) => {
       runValidators: true,
     });
 
-    if (!lot)
-      return res.status(404).json({ success: false, message: "Lot not found" });
+    if (!lot) return res.status(404).json({ success: false, message: "Lot not found" });
 
     return res.status(200).json({
       success: true,

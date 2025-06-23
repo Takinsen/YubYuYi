@@ -9,5 +9,7 @@ const router = Router();
 router.get('/:id', authenticate , controllers.getDurianById);
 router.get('/guest/:id', controllers.getDurianByGuest);
 router.post('/create', authenticate , controllers.createDurian);
+router.put('/assign', authenticate , authorize("house") , controllers.assignToLot);
+router.put('/unassign', authenticate , authorize("house") , controllers.unassignFromLot);
 
 export default router;

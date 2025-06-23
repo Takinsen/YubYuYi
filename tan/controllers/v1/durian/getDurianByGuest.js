@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Durian from "../../../models/hot/durianModel.js";
 import VARIETY from "../../../constants/variety.js";
 
@@ -84,16 +85,35 @@ export const getDurianByGuest = async (req, res) => {
     const langQuery = (req.query.lang || "").toLowerCase();
     const lang = ["th", "thai"].includes(langQuery) ? "th" : "en";
 
-    const durian = await Durian.findById(req.params.id)
-      .populate({
-        path: "lotId",
-        populate: [
-          { path: "farmId" },
-          { path: "houseId" },
-          { path: "shippingId" },
-        ],
-      })
-      .lean();
+    const param = req.params.id;
+    let durian;
+
+    // Try by ObjectId first
+    if (mongoose.Types.ObjectId.isValid(param)) {
+      durian = await Durian.findById(param)
+        .populate({
+          path: "lotId",
+          populate: [
+            { path: "farmId" },
+            { path: "houseId" },
+            { path: "shippingId" },
+          ],
+        })
+        .lean();
+    }
+    // If not found by ObjectId or not a valid ObjectId, try displayId
+    if (!durian) {
+      durian = await Durian.findOne({ displayId: param })
+        .populate({
+          path: "lotId",
+          populate: [
+            { path: "farmId" },
+            { path: "houseId" },
+            { path: "shippingId" },
+          ],
+        })
+        .lean();
+    }
 
     if (!durian) {
       return res.status(404).json({ status: false, message: "Durian not found" });

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import Durian from "../../../models/hot/durianModel.js";
 import Lot from "../../../models/hot/lotModel.js";
 
-export const assignLot = async (req, res) => {
+export const unassignFromLot = async (req, res) => {
   try {
     const { displayId , lotId } = req.body;
 
@@ -13,16 +13,9 @@ export const assignLot = async (req, res) => {
     const lotExists = await Lot.exists({ _id: lotId });
     if (!lotExists) return res.status(404).json({ success: false, message: "Lot not found" });
 
-    const durian = await Durian.findOneAndUpdate(
-      { displayId },           
-      { $set: { lotId }}, 
-      {
-        new: true,        
-        upsert: true, 
-        runValidators: true,
-        setDefaultsOnInsert: true,
-      }
-    );
+    const durian = await Durian.findOneAndDelete({ displayId, lotId });
+
+    if(!durian) return res.status(404).json({ success: false, message: "Durian not found or already unassigned" });        
 
     return res.status(200).json({ success: true , durian });
   } catch (error) {
