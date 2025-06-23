@@ -1,12 +1,12 @@
-const assignDisplayIdToLot = async (id:string , token:string) => {
+const assignDisplayIdToLot = async (lotId:string ,displayId:string , token:string) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/lot/edit/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/lot/edit/${lotId}`, {
       method: "PUT",
       headers: {
         "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json",  
       },
-        body: JSON.stringify({ displayId: id }),
+        body: JSON.stringify({ displayId }),
       credentials: "include", 
   });
 

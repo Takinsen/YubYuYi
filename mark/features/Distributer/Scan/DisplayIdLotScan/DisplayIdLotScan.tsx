@@ -1,20 +1,20 @@
 
 'use client';
-import style from './AssignDurianScan.module.css'
+import style from './DisplayIdLotScan.module.css'
 import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import LogoRole from "@/components/logoRole/LogoRole";
 import LogoutButton from "@/components/logoutButton/LogoutButton";
 import QrScanner, { QrScannerHandle } from '@/components/Scanner/Scanner';
 import { Button } from '@mantine/core';
-import assignDurian from '@/api/durian/assignDurian';
+import assignDisplayIdToLot from '@/api/lot/assignDisplayId';
 import { useAuth } from "@/providers/AuthContext";
 
 type AssignProps = {
   lotId: string;
 }
 
-export default function AssignDurianScan({ lotId }: AssignProps) {
+const DisplayIdLotScan = ({ lotId }: AssignProps) => {
   const router = useRouter();
   const { user } = useAuth();
   const scannerRef = useRef<QrScannerHandle>(null);
@@ -27,7 +27,7 @@ export default function AssignDurianScan({ lotId }: AssignProps) {
 
   const handleContinue = async() =>{
     await scannerRef.current?.stopScanner();
-    const res = await assignDurian(lotId, id, user.token);
+    const res = await assignDisplayIdToLot(lotId, id, user.token);
     console.log(res)
     router.push(`/distributer/lotinfo/${encodeURIComponent(lotId)}`);
   }
@@ -50,7 +50,7 @@ export default function AssignDurianScan({ lotId }: AssignProps) {
         <QrScanner ref={scannerRef} onScan={handleScan} />
         { id !== '' &&
       <div className={style.ActionContainer}>
-        <Button variant='green-md' onClick={handleContinue}>เพิ่มทุเรียน</Button>
+        <Button variant='green-md' onClick={handleContinue}>กำหนดกล่อง</Button>
       </div>
       }
       <div className={style.BackButtonContainer}>
@@ -61,3 +61,5 @@ export default function AssignDurianScan({ lotId }: AssignProps) {
     </div>
   );
 }
+
+export default DisplayIdLotScan

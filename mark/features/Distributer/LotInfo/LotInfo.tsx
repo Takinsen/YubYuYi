@@ -33,6 +33,10 @@ export default function LotInfo({ id }: InfoProps) {
   const handleAssignDurian = () => {
     router.push(`/distributer/scan/assigndurianscan/${id}`);
   }
+
+  const handleAddDisplayIdLot = () => {
+    router.push(`/distributer/scan/displayidlotscan/${id}`);
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -76,6 +80,7 @@ export default function LotInfo({ id }: InfoProps) {
       </div>
 
       <Button onClick={handleAssignDurian}>เพิ่มรายการทุเรียน</Button>
+      <Button onClick={handleAddDisplayIdLot}>กำหนดกล่อง</Button>
 
       <div className={style.ButtonContainer}>
         <Button onClick={handleBack}>{'<-'} ย้อนกลับ</Button>
