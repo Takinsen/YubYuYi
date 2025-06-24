@@ -2,7 +2,7 @@ import Lot from "../../../models/hot/lotModel.js";
 
 export const unassignToShipping = async (req, res) => {
   try {
-    const lotId = req.params.id;
+    const lotId = req.body.lotId;
 
     const lot = await Lot.findByIdAndUpdate(
       lotId,
