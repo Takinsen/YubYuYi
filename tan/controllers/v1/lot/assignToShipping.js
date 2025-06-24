@@ -18,17 +18,16 @@ export const assignToShipping = async (req, res) => {
     
 
     // Assign lot to shipping
-    const lot = await Lot.findByIdAndUpdate(
-      lotId,
-      { shippingId: shipping._id },
-      { new: true, runValidators: true }
-    );
+    let lotDoc;
+    if (mongoose.Types.ObjectId.isValid(lotId)) lotDoc = await Lot.findById(lotId);
+    if (!lotDoc) lotDoc = await Lot.findOne({ displayId: lotId });
+    if (!lotDoc) return res.status(404).json({ success: false, message: "Lot not found." });
 
-    if (!lot) {
-      return res.status(404).json({ success: false, message: "Lot not found." });
-    }
+    // Assign lot to shipping
+    lotDoc.shippingId = shipping._id;
+    await lotDoc.save();
 
-    return res.status(200).json({ success: true, lot });
+    return res.status(200).json({ success: true, lot: lotDoc });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ success: false, message: "Server error", error: error.message });
