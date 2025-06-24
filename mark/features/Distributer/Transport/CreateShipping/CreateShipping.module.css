@@ -23,8 +23,8 @@
 .Title{
   font-size: 24px;
   text-align: center;
-  font-weight: 600;
-  margin-bottom: 24px;
+  font-weight: 800;
+  margin-bottom: 30px;
 }
 .BackdropShade{
   position: absolute;
@@ -72,6 +72,12 @@
 .TextInput{
   margin-bottom: 20px;
 }
+.InputGroup{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
 .Button{
   margin-top: 16px;
 }
@@ -108,9 +114,11 @@
   height: 24px;
   flex-shrink: 0;
 }
+
 .dataContainer{
   padding-top: 36px;
-  height: calc(100% - 140px);
+  padding-bottom: 36px;
+  height: calc(100% - 150px);
   -webkit-mask-image: linear-gradient(to bottom, transparent 10px, black 50px, black calc(100% - 60px), transparent calc(100% - 10px));
   mask-image: linear-gradient(to bottom, transparent 10px, black 50px, black calc(100% - 60px), transparent calc(100% - 10px));
   
@@ -120,13 +128,18 @@
   overflow-y: scroll;
 
 }
-
+.ActionContainer{
+  position: absolute;
+  bottom: 83px;
+  left: 33px;
+  right: 33px;
+}
 .ButtonContainer{
   position: absolute;
   bottom: 30px;
   left: 33px;
   right: 33px;
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-direction: row;
+  gap: 4px;
 }

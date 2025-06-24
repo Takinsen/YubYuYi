@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import getContents from "@/api/lot/getContents";
 import { useAuth } from "@/providers/AuthContext";
-import style from "./LotInfo.module.css";
+import style from "./ShippingInfo.module.css";
 import CheckpontBar from "@/components/checkpointBar/CheckpontBar";
 import formatData from "@/utils/formatCheckpointData";
 import LogoRole from "@/components/logoRole/LogoRole";
@@ -17,14 +17,14 @@ type InfoProps = {
   id: string;
 };
 
-export default function LotInfo({ id }: InfoProps) {
+export default function ShippingInfo({ id }: InfoProps) {
   const router = useRouter();
   const { user } = useAuth();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   const handleBack = () => {
-    router.push('/distributer/home');
+    router.push('/distributer/transport');
   }
 
   const handleReScan = () => {
@@ -53,7 +53,7 @@ export default function LotInfo({ id }: InfoProps) {
       } 
     };
 
-    fetchData();
+    //fetchData();
   }, [id, user]);
 
   //if (!data?.timeline) return
