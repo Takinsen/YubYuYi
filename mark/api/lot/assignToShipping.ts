@@ -11,7 +11,10 @@ const assignToShipping = async (shippingId: string, lotId: string, token: string
         shippingId,
         lotId
       }),
-  })
+  });
+
+  return await res.json();
+
  } catch (error) {
   console.error("Failed to assign lot to shiping:", error);
   throw error;

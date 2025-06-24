@@ -14,8 +14,6 @@ export interface Lot {
   };
   variety: string;
   palletId: string;
-  importBy: string;
-  exportBy: string;
 }
 
 const createLot = async (lot: Lot, token: string) => {

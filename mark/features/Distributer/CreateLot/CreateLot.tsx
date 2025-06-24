@@ -44,7 +44,7 @@ const CreateLot = () => {
   };
 
   const handleSubmit = async () => {
-    if (!farmId || !netWeight || !grossWeight || !grade || !variety || !width || !length || !height || !palletId || !importBy || !exportBy) {
+    if (!farmId || !netWeight || !grossWeight || !grade || !variety || !width || !length || !height || !palletId ) {
       alert("กรุณากรอกข้อมูลให้ครบถ้วน");
       return;
     }
@@ -64,8 +64,6 @@ const CreateLot = () => {
       },
       variety,
       palletId,
-      importBy,
-      exportBy
     };
 
     console.log("Lot Object:", lotData);
@@ -138,12 +136,6 @@ const CreateLot = () => {
           </div>
           <div className={style.InputLable}>รหัสพาเลท (palletId)</div>
           <TextInput value={palletId} onChange={(e) => setPalletId(e.currentTarget.value)} className={style.TextInput} />
-
-          <div className={style.InputLable}>นำเข้าโดย</div>
-          <TextInput value={importBy} onChange={(e) => setImportBy(e.currentTarget.value)} className={style.TextInput} />
-
-          <div className={style.InputLable}>ส่งออกโดย</div>
-          <TextInput value={exportBy} onChange={(e) => setExportBy(e.currentTarget.value)} className={style.TextInput} />
 
         </div>
 
