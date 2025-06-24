@@ -20,7 +20,7 @@ export { unassignFromLot } from "./durian/unassignFromLot.js";
 
 // Lot
 export { myLot } from "./lot/myLot.js";
-export { getContents } from "./lot/getContents.js";
+export { getLotContents } from "./lot/getLotContents.js";
 export { createLot } from "./lot/create.js";
 export { editLot } from "./lot/editLot.js";
 export { assignToShipping } from "./lot/assignToShipping.js";
@@ -28,5 +28,6 @@ export { unassignToShipping } from "./lot/unassignToShipping.js";
 
 // Shipping
 export { myShipping } from "./shipping/mine.js";
+export { getShippingContents } from "./shipping/getShippingContents.js";
 export { createShipping } from "./shipping/create.js";
 export { editShipping } from "./shipping/editShipping.js";
