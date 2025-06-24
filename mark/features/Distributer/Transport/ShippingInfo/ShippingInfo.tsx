@@ -35,8 +35,8 @@ export default function ShippingInfo({ id }: InfoProps) {
     router.push(`/distributer/scan/assigndurianscan/${id}`);
   }
 
-  const handleAddDisplayIdLot = () => {
-    router.push(`/distributer/scan/displayidlotscan/${id}`);
+  const handleAddShipping = () => {
+    router.push(`/distributer/transport/scan/assignboxscan/${id}`);
   }
   useEffect(() => {
     const fetchData = async () => {
@@ -81,8 +81,7 @@ export default function ShippingInfo({ id }: InfoProps) {
       </div>
 
       <div className={style.ButtonContainer}>
-        <Button variant="green-md" onClick={handleAssignDurian}>เพิ่มรายการทุเรียน</Button>
-      <Button onClick={handleAddDisplayIdLot}>กำหนดกล่อง</Button>
+      <Button variant="green-md" onClick={handleAddShipping}>เพิ่มกล่อง</Button>
         <Button onClick={handleBack}>{'<-'} ย้อนกลับ</Button>
       </div>
     </div>
