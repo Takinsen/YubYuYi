@@ -5,7 +5,7 @@ import LogoRole from "@/components/logoRole/LogoRole";
 import LogoutButton from "@/components/logoutButton/LogoutButton";
 import { useAuth } from "@/providers/AuthContext";
 import Link from "next/link";
-import getLot from "@/api/lot/getLot";
+import { getLot } from "@/api/lot/apis";
 import Lot from "./components/lot/Lot";
 import { use, useEffect, useState } from "react";
 

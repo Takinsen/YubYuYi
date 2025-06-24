@@ -7,7 +7,7 @@ import LogoRole from "@/components/logoRole/LogoRole";
 import LogoutButton from "@/components/logoutButton/LogoutButton";
 import QrScanner, { QrScannerHandle } from '@/components/Scanner/Scanner';
 import { Button } from '@mantine/core';
-import assignDisplayIdToLot from '@/api/lot/assignDisplayId';
+import { assignDisplayIdToLot } from '@/api/lot/apis';
 import { useAuth } from "@/providers/AuthContext";
 
 type AssignProps = {

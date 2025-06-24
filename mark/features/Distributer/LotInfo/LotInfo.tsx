@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import getContents from "@/api/lot/getContents";
+import { getContents } from "@/api/lot/apis";
 import { useAuth } from "@/providers/AuthContext";
 import style from "./LotInfo.module.css";
 import CheckpontBar from "@/components/checkpointBar/CheckpontBar";
