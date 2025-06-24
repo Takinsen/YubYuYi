@@ -9,6 +9,8 @@ const router = Router();
 router.get('/mine', authenticate , authorize("farmer" , "house") , controllers.myLot);
 router.get('/contents/:id', authenticate , authorize("farmer" , "house") , controllers.getContents);
 router.post('/create', authenticate , authorize("house") , controllers.createLot);
-router.put('/edit/:id', authenticate , authorize("house" , "transport" , "ministry") , controllers.editLot);
+router.put('/edit/:id', authenticate , authorize("house") , controllers.editLot);
+router.put('/assign', authenticate , authorize("house") , controllers.assignToShipping);
+router.put('/unassign', authenticate , authorize("house") , controllers.unassignToShipping);
 
 export default router;

@@ -4,8 +4,7 @@ import mongoose from "mongoose";
 
 export const assignToShipping = async (req, res) => {
   try {
-    const lotId = req.params.id;
-    const { shippingId } = req.body;
+    const { shippingId , lotId } = req.body;
 
     if (!shippingId) {
       return res.status(400).json({ success: false, message: "shippingId is required." });

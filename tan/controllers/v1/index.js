@@ -23,6 +23,8 @@ export { myLot } from "./lot/myLot.js";
 export { getContents } from "./lot/getContents.js";
 export { createLot } from "./lot/create.js";
 export { editLot } from "./lot/editLot.js";
+export { assignToShipping } from "./lot/assignToShipping.js";
+export { unassignToShipping } from "./lot/unassignToShipping.js";
 
 // Shipping
 export { myShipping } from "./shipping/mine.js";
