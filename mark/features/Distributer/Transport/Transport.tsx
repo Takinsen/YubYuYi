@@ -5,7 +5,7 @@ import LogoRole from "@/components/logoRole/LogoRole";
 import LogoutButton from "@/components/logoutButton/LogoutButton";
 import { useAuth } from "@/providers/AuthContext";
 import Link from "next/link";
-import getShipping from "@/api/shipping/getShipping";
+import {getShipping} from "@/api/shipping/apis";
 import Shipping from "./components/shipping/Shipping";
 import { use, useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
