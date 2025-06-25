@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './Log.module.css';
-import formatThaiDate from '@/utils/formatDateThai';
+import { formatEngDate } from '@/utils/formatDateThai';
 
 interface Log {
   status: string;
@@ -17,7 +17,7 @@ const Log = ({log}: LogProps) => {
       <div className={style.status}>
         {log.status}
       </div>
-      <div className={style.date}>{formatThaiDate(log.inspectedAt)}</div>
+      <div className={style.date}>{formatEngDate(log.inspectedAt)}</div>
       <div className={style.devider} />
       <div className={style.displayId}>
         ID:{log.displayId !== null ? log.displayId : 'ไม่ระบุ'}  
