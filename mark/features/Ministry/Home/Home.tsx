@@ -56,15 +56,7 @@ const Home = () => {
         <div className={style.devider} />
 
         <div className={style.headerContainer}>
-          <div className={style.Header}>รายการล็อตสินค้า</div>
-          <div className={style.addButtonContainer}>
-            <Link href="/distributer/createlot">
-              <Button variant="green-small">
-                <img className={style.plusIcon} src="/icons/plusWhite.svg" />
-                &nbsp;&nbsp;เพิ่มรายการ
-              </Button>
-            </Link>
-          </div>
+          <div className={style.Header}>ประวัติการตรวจสอบ</div>
         </div>
         <div className={style.dataContainer}>
           {lots.length > 0 ? (
@@ -84,7 +76,7 @@ const Home = () => {
               </Link>
             ))
           ) : (
-            <div className={style.noData}>ไม่มีข้อมูลล็อตสินค้า</div>
+            <div className={style.noData}>ไม่มีประวัติการตรวจสอบ</div>
           )}
         </div>
 
