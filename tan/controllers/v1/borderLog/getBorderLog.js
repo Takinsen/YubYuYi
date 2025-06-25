@@ -5,9 +5,7 @@ export const getBorderLogs = async (req, res) => {
 
     const logs = await BorderLog.find()
       .populate("shippingId")
-      .populate("lots")
-      .sort({ confirmedAt: -1 })
-      .lean();
+      .sort({ createdAt: -1 })
 
     return res.status(200).json({ success: true, data: logs });
   } catch (error) {

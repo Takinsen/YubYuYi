@@ -10,6 +10,7 @@ import houseRoutes from "./routes/v1/houseRoutes.js";
 import lotRoutes from "./routes/v1/lotRoutes.js";
 import shippingRoutes from "./routes/v1/shippingRoutes.js";
 import inspectLogRoutes from "./routes/v1/inspectLogRoutes.js";
+import borderLogRoutes from "./routes/v1/borderLogRoutes.js";
 
 const app = express();
 
@@ -35,5 +36,6 @@ app.use("/api/v1/house", houseRoutes);
 app.use("/api/v1/lot", lotRoutes);
 app.use("/api/v1/shipping", shippingRoutes);
 app.use("/api/v1/inspectLog", inspectLogRoutes);
+app.use("/api/v1/borderLog", borderLogRoutes);
 
 export default app
