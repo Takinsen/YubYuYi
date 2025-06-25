@@ -67,9 +67,9 @@ const COMMON_GROUP = [
 
 const INSPECT_GROUP = [
   {
-    inspectStatus: "lotId.inspect.status",
-    inspectAt: "lotId.inspect.inspectAt",
-    reason: "lotId.inspect.note",
+    inspectStatus: "lotId.shippingId.inspect.status",
+    inspectAt: "lotId.shippingId.inspect.inspectAt",
+    reason: "lotId.shippingId.inspect.note",
   }
 ];
 
@@ -116,8 +116,8 @@ const transformDurian = (doc, role, lang) => {
       status: get(doc, "lotId.transportAt") ? "completed" : "",
     },
     {
-      inspectedAt: formatDateDMY(get(doc, "lotId.inspect.inspectAt")),
-      status: get(doc, "lotId.inspect.inspectAt") ? "completed" : "",
+      inspectedAt: formatDateDMY(get(doc, "lotId.shippingId.inspect.inspectAt")),
+      status: get(doc, "lotId.shippingId.inspect.inspectAt") ? "completed" : "",
     },
     {
       arrivedAt: formatDateDMY(get(doc, "lotId.shippingId.arrivedAt")),

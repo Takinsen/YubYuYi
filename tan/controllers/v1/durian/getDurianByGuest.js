@@ -68,7 +68,7 @@ const transformDurian = (doc, lang) => {
     },
     {
       inspectedAt: formatDateDMY(get(doc, "lotId.inspect.inspectAt")),
-      status: get(doc, "lotId.inspect.inspectAt") ? "completed" : "",
+      status: get(doc, "lotId.shippingId.inspect.inspectAt") ? "completed" : "",
     },
     {
       arrivedAt: formatDateDMY(get(doc, "lotId.shippingId.arrivedAt")),

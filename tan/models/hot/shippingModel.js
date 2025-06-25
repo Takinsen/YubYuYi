@@ -17,6 +17,15 @@ const shippingSchema = new mongoose.Schema(
       enum: ["pending", "waiting", "exporting"],
       default: "pending",
     },
+    inspect: {
+      status: {
+        type: String,
+        enum: ["PENDING", "VERIFIED", "REJECT"],
+        default: "PENDING",
+      },
+      note: { type: String, default: null },
+      inspectAt: { type: Date, default: null },
+    },
     arrivedAt: { type: Date, default: null },
     licensePlate: { type: String, required: true },
     importBy: { type: String, required: true },

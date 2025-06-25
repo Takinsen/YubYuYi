@@ -45,15 +45,6 @@ const lotSchema = new mongoose.Schema(
       enum: ["sorting", "transporting", "inspecting", "arriving"],
       default: "sorting"
     },
-    inspect: {
-      status: {
-        type: String,
-        enum: ["PENDING", "VERIFIED", "REJECT"],
-        default: "PENDING",
-      },
-      note: { type: String, default: null },
-      inspectAt: { type: Date, default: null },
-    },
     weight: {
       net: { type: Number, required: true },
       gross: { type: Number, required: true },
@@ -74,21 +65,6 @@ const lotSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
-// lotSchema.pre("validate", async function (next) {
-//   if (!this.isNew || this.displayId) return next();
-
-//   let unique = false;
-//   while (!unique) {
-//     const candidate = generateDisplayId();
-//     const exists = await mongoose.models.Lot.exists({ displayId: candidate });
-//     if (!exists) {
-//       this.displayId = candidate;
-//       unique = true;
-//     }
-//   }
-//   next();
-// });
 
 const Lot = mongoose.model("Lot", lotSchema);
 export default Lot;

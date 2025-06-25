@@ -15,6 +15,7 @@ export { createHouse } from "./house/create.js";
 export { getDurianById } from "./durian/getDurianById.js";
 export { getDurianByGuest } from "./durian/getDurianByGuest.js";
 export { createDurian } from "./durian/create.js";
+export { inspectDurian } from "./durian/inspectDurian.js";
 export { assignToLot } from "./durian/assignToLot.js";
 export { unassignFromLot } from "./durian/unassignFromLot.js";
 
