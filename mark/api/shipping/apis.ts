@@ -80,4 +80,23 @@ export const getInspectLog = async (token: string) => {
   }
 }
 
+export const getBorderLog = async (token: string) => {
+  try{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/borderLog/mine`, {
+       method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",  
+      },
+      credentials: "include", 
+    });
+
+    return await res.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+
 

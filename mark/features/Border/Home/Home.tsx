@@ -5,7 +5,7 @@ import LogoRole from "@/components/logoRole/LogoRole";
 import LogoutButton from "@/components/logoutButton/LogoutButton";
 import { useAuth } from "@/providers/AuthContext";
 import Link from "next/link";
-import { getInspectLog } from "@/api/shipping/apis";
+import { getBorderLog } from "@/api/shipping/apis";
 import Log from "./components/log/Log";
 import { use, useEffect, useState } from "react";
 
@@ -18,7 +18,7 @@ const Home = () => {
     const fetchLog = async () => {
     try{
       if (user?.token) {
-        const res = await getInspectLog(user.token)
+        const res = await getBorderLog(user.token)
   
         setLog(res.data);
       } 
@@ -65,7 +65,7 @@ const Home = () => {
                   key={l._id}
                   log={{
                     status: l.status,
-                    inspectedAt: l.inspectedAt,
+                    inspectedAt: l.confirmedAt,
                     displayId: l.shippingId.displayId,
                   }}
                 />
