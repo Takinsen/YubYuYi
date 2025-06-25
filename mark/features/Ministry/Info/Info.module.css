@@ -111,7 +111,7 @@
 .dataContainer{
   padding-top: 36px;
   padding-bottom: 36px;
-  height: calc(100% - 140px);
+  height: calc(100% - 300px);
   -webkit-mask-image: linear-gradient(to bottom, transparent 10px, black 50px, black calc(100% - 60px), transparent calc(100% - 10px));
   mask-image: linear-gradient(to bottom, transparent 10px, black 50px, black calc(100% - 60px), transparent calc(100% - 10px));
   
@@ -122,11 +122,25 @@
 
 }
 
-.ButtonContainer{
+.InputContainer{
   position: absolute;
-  bottom: 30px;
-  left: 33px;
-  right: 33px;
+  box-sizing: border-box;
+  padding-bottom: 30px;
+  bottom: 0px;
+  height: 269px;
+  padding-top: 33px;
+  padding-left: 33px;
+  padding-right: 33px;
+  left: 0px;
+  right: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.125);
+  border-radius: 31px 31px 0px 0px;
+}
+.ButtonContainer{
   display: flex;
   flex-direction: row;
   gap: 4px;

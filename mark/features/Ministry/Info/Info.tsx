@@ -9,8 +9,9 @@ import formatData from "@/utils/formatCheckpointData";
 import LogoRole from "@/components/logoRole/LogoRole";
 import LogoutButton from "@/components/logoutButton/LogoutButton";
 import DataField from "@/components/dataField/DataField";
-import { Button } from "@mantine/core";
+import { Button, TextInput, Select } from "@mantine/core";
 import { useRouter } from 'next/navigation';
+import inspect from "@/api/durian/inspect";
 
 type InfoProps = {
   id: string;
@@ -21,6 +22,14 @@ export default function Info({ id }: InfoProps) {
   const { user } = useAuth();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [note, setNote] = useState('');
+  const [status, setStatus] = useState<string | null>('');
+
+  const statusOptions = [
+    { value: 'VERIFIED', label: 'ผ่าน (VERIFIED)'},
+    { value: 'REJECT', label: 'ไม่ผ่าน (REJECT)'}
+
+  ]
 
   const handleBack = () => {
     router.push('/ministry/home');
@@ -28,6 +37,16 @@ export default function Info({ id }: InfoProps) {
 
   const handleReScan = () => {
     router.push('/ministry/scan');
+  }
+
+  const handleSubmit = async () => {
+    if (!status) {
+      alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+      return;
+    }
+    
+    const res = await inspect (id, status, note, user.toke);
+    handleBack();
   }
 
   useEffect(() => {
@@ -72,9 +91,16 @@ export default function Info({ id }: InfoProps) {
       )}
       </div>
 
-      <div className={style.ButtonContainer}>
+      <div className={style.InputContainer}>
+        <div className={style.InputLable}>ผลการตรวจสอบ</div>
+         <Select variant="select" onChange={(value) => {setStatus(value)}} className={style.TextInput}  placeholder="เลือก" data={statusOptions} searchable={true}/>
+        <TextInput value={note} placeholder="บันทึกเพิ่มเติม" onChange={(e) => setNote(e.currentTarget.value)} className={style.TextInput} />
+          
+        <div className={style.ButtonContainer}>
         <Button onClick={handleBack}>{'<-'} ย้อนกลับ</Button>
-        <Button  variant="green-md" onClick={handleReScan}>สแกนอีกครั้ง</Button>
+        <Button  variant="green-md" onClick={handleSubmit}>บันทึก</Button>
+        <Button  variant="gray-md" onClick={handleReScan}>สแกนใหม่</Button>
+        </div>
       </div>
     </div>
   );
