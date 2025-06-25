@@ -110,6 +110,7 @@
 }
 .dataContainer{
   padding-top: 36px;
+  padding-bottom: 36px;
   height: calc(100% - 140px);
   -webkit-mask-image: linear-gradient(to bottom, transparent 10px, black 50px, black calc(100% - 60px), transparent calc(100% - 10px));
   mask-image: linear-gradient(to bottom, transparent 10px, black 50px, black calc(100% - 60px), transparent calc(100% - 10px));
@@ -129,4 +130,19 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+.ButtonContainerRow{
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+.Header{
+  color: var(--mantine-color-grays-0);
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+.headerContainer{
+  margin-top: 24px;
+  position: relative;
 }

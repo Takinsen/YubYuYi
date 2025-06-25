@@ -5,7 +5,7 @@ import LogoRole from "@/components/logoRole/LogoRole";
 import LogoutButton from "@/components/logoutButton/LogoutButton";
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, use } from "react";
-import createShipping from "@/api/shipping/createShipping";
+import { createShipping } from "@/api/shipping/apis";
 import { useAuth } from "@/providers/AuthContext";
 import searchFarm from "@/api/farm/searchFarm";
 import { Labrada } from "next/font/google";

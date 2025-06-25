@@ -5,7 +5,7 @@ import LogoRole from "@/components/logoRole/LogoRole";
 import LogoutButton from "@/components/logoutButton/LogoutButton";
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, use } from "react";
-import createLot from "@/api/lot/createLot";
+import { createLot } from "@/api/lot/apis";
 import { useAuth } from "@/providers/AuthContext";
 import searchFarm from "@/api/farm/searchFarm";
 
@@ -44,7 +44,7 @@ const CreateLot = () => {
   };
 
   const handleSubmit = async () => {
-    if (!farmId || !netWeight || !grossWeight || !grade || !variety || !width || !length || !height || !palletId || !importBy || !exportBy) {
+    if (!farmId || !netWeight || !grossWeight || !grade || !variety || !width || !length || !height || !palletId ) {
       alert("กรุณากรอกข้อมูลให้ครบถ้วน");
       return;
     }
@@ -64,8 +64,6 @@ const CreateLot = () => {
       },
       variety,
       palletId,
-      importBy,
-      exportBy
     };
 
     console.log("Lot Object:", lotData);
@@ -138,12 +136,6 @@ const CreateLot = () => {
           </div>
           <div className={style.InputLable}>รหัสพาเลท (palletId)</div>
           <TextInput value={palletId} onChange={(e) => setPalletId(e.currentTarget.value)} className={style.TextInput} />
-
-          <div className={style.InputLable}>นำเข้าโดย</div>
-          <TextInput value={importBy} onChange={(e) => setImportBy(e.currentTarget.value)} className={style.TextInput} />
-
-          <div className={style.InputLable}>ส่งออกโดย</div>
-          <TextInput value={exportBy} onChange={(e) => setExportBy(e.currentTarget.value)} className={style.TextInput} />
 
         </div>
 
