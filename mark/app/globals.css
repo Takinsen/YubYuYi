@@ -19,8 +19,13 @@
   }
 }
 
+html{
+  background: var(--mantine-color-primary-1);
+  padding: env(safe-area-inset);
+}
+
 body {
-  background: var(--background);
+  background: var(--mantine-color-primary-1);
   color: var(--foreground);
   -webkit-text-stroke-width: 0 !important;
   font-synthesis: none !important;
