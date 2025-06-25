@@ -39,7 +39,7 @@ const Home = () => {
       <img className={style.BackdropArt} src="/images/PathBackDrop.svg" />
       <div className={style.BackdropShade} />
       <div className={style.LogoContainer}>
-        <LogoRole text={"ministry"} />
+        <LogoRole text={"immigration officer"} />
       </div>
       <div className={style.LogoutButtonContainer}>
         <LogoutButton />
@@ -51,15 +51,15 @@ const Home = () => {
             <img className={style.SearchIcon} src="/icons/search.svg" />
           }
           variant="search"
-          placeholder="ค้นหาด้วยรหัสรอบขนส่ง"
+          placeholder="Search by Tracking ID"
         />
         <div className={style.devider} />
 
         <div className={style.headerContainer}>
-          <div className={style.Header}>ประวัติการตรวจสอบ</div>
+          <div className={style.Header}>Inspection history</div>
         </div>
         <div className={style.dataContainer}>
-          {log.length > 0 ? (
+          {log && log?.length > 0 ? (
             log.map((l:any) => (
                 <Log
                   key={l._id}
@@ -72,13 +72,13 @@ const Home = () => {
     
             ))
           ) : (
-            <div className={style.noData}>ไม่มีประวัติการตรวจสอบ</div>
+            <div className={style.noData}>No inspection history</div>
           )}
         </div>
 
         <div className={style.scanContainer}>
           
-          <Link href="/ministry/scan">
+          <Link href="/border/scan">
             <Button variant="biground">
               <img className={style.scanIcon} src="/icons/scanWhite.svg" />
             </Button>

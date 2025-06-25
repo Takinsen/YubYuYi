@@ -42,8 +42,8 @@
   font-size: 12px;
   color: var(--mantine-color-grays-0);
   position: absolute;
-  bottom: 0%;
-  right: 0px;
+  bottom: 8px;
+  right: 12px;
   font-weight: 600;
   text-align: right;
   display: flex;

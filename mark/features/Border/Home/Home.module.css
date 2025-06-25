@@ -98,10 +98,21 @@
 .scanContainer{
   position: absolute;
   bottom: 36px;
+  left: 33px;
+  right: 33px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+.tabContainer{
+  position: absolute;
+  bottom: 36px;
   left: 0px;
   right: 0px;
   display: flex;
   justify-content: center;
+  gap: 60px;
 }
 .scanIcon{
   width: 24px;
@@ -117,6 +128,15 @@
 .headerContainer{
   margin-top: 24px;
   position: relative;
+}
+.addButtonContainer{
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+.plusIcon{
+  width: 15px;
+  height: 15px;
 }
 
 .dataContainer{
