@@ -97,7 +97,7 @@ export default function Home({ id }: InfoProps) {
             </div>
             <div className={style.boxContainer}>
               <DataBox title="Grade" text={data.data.grade} iconPath="/icons/badgeGray.svg"/>
-              <DataBox title="Harvested" text={data.data.harvestAt} iconPath="/icons/basketGray.svg"/>
+              <DataBox title="Sorted" text={data.data.sortedAt} iconPath="/icons/basketGray.svg"/>
             </div>
           </div>
         )}
