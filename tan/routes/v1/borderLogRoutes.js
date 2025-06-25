@@ -6,6 +6,6 @@ const router = Router();
 
 // -------------------------- Inspect Log Routes -------------------------- //
 
-router.get('/mine', authenticate , authorize("ministry") , controllers.getInspectLogs);
+router.get('/mine', authenticate , authorize("border") , controllers.getBorderLogs);
 
 export default router;

@@ -36,3 +36,6 @@ export { confirmShipping } from "./shipping/confirmShipping.js";
 
 // InspectLog
 export { getInspectLogs } from "./inspectLog/getInspectLogs.js";
+
+// BorderLog
+export { getBorderLogs } from "./borderLog/getBorderLog.js";
