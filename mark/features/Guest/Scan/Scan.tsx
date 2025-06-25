@@ -34,9 +34,7 @@ export default function Scan() {
       <div className={style.LogoContainer}>
         <LogoRole text={"Customer"} />
       </div>
-      <div className={style.LogoutButtonContainer}>
-        <LogoutButton />
-      </div>
+
       <div className={style.ContainerCard}>
         <QrScanner ref={scannerRef} onScan={handleScan} />
         { id !== '' &&
