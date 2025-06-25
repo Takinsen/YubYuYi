@@ -31,7 +31,7 @@ const Lot = ({lot}: LotProps) => {
         <img className={style.Icon} src="/icons/branchGray.svg"/>{lot.variety}
       </div>
       <div className={style.displayId}>
-        ID:{lot.displayId !== null ? lot.displayId : 'ไม่ระบุ'}  <img className={style.Icon} src="/icons/chevronGray.svg"/>
+        ID:{lot.displayId !== null ? lot.displayId : 'ไม่ระบุ'}  
       </div>
     </div>
   )
