@@ -14,8 +14,8 @@ const shippingSchema = new mongoose.Schema(
     displayId: { type: String, unique: true },
     status: {
       type: String,
-      enum: ["pending", "waiting", "exporting"],
-      default: "pending",
+      enum: ["exported", "verified", "rejected"],
+      default: "exported",
     },
     inspect: {
       status: {

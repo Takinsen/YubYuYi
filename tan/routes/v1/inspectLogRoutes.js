@@ -6,6 +6,6 @@ const router = Router();
 
 // -------------------------- House Routes -------------------------- //
 
-router.get('/mine', authenticate , authorize("ministry") , controllers.getInspectLogs);
+router.get('/mine', authenticate , authorize("ministry" , "border") , controllers.getInspectLogs);
 
 export default router;
