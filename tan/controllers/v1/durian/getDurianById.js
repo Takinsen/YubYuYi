@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Durian from "../../../models/hot/durianModel.js";
+import Lot from "../../../models/hot/lotModel.js";
 import FIELD_MAP from "../../../constants/field.js";
 import LOT_STATUS from "../../../constants/lotStatus.js";
 import PRODUCT_TYPE from "../../../constants/productType.js";
@@ -137,6 +138,8 @@ export const getDurianById = async (req, res) => {
 
     const param = req.params.id;
     let durian;
+    let isCondition3 = false;
+    let lotForCondition3 = null;
 
     // Check if param is a valid Mongo ObjectId
     if (mongoose.Types.ObjectId.isValid(param)) {
@@ -165,11 +168,44 @@ export const getDurianById = async (req, res) => {
         .lean();
     }
 
+    // Condition 3
     if (!durian) {
-      return res.status(404).json({ status: false, message: "Durian not found" });
+      let lot;
+      if (mongoose.Types.ObjectId.isValid(param)) lot = await Lot.findById(param);
+      if (!lot) lot = await Lot.findOne({ displayId: param });
+      if (!lot) return res.status(404).json({ status: false, message: "Durian or Lot not found" });
+      durian = await Durian.findOne({ lotId: lot._id })
+        .populate({
+          path: "lotId",
+          populate: [
+            { path: "farmId" },
+            { path: "houseId" },
+            { path: "shippingId" },
+          ],
+        }).lean();
+      isCondition3 = true;
+      lotForCondition3 = lot;
     }
 
-    return res.status(200).json(transformDurian(durian, role, lang));
+    let result = transformDurian(durian, role, lang);
+
+    // If Condition 3, override displayId in all data groups with lot.displayId
+    if (isCondition3 && lotForCondition3 && result && Array.isArray(result.data)) {
+      result.data = result.data.map(group => {
+        // Overwrite if any key in group matches (case-insensitive) 'displayId', 'Tracking No.', or 'รหัสติดตาม'
+        const displayIdKey = Object.keys(group).find(
+          k => k.toLowerCase().includes("displayid") ||
+               k.toLowerCase().includes("tracking no") ||
+               k.includes("รหัสติดตาม")
+        );
+        if (displayIdKey) {
+          return { ...group, [displayIdKey]: lotForCondition3.displayId };
+        }
+        return group;
+      });
+    }
+
+    return res.status(200).json(result);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ status: false, message: "Server error", error: err.message });

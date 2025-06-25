@@ -25,6 +25,7 @@ export const assignToShipping = async (req, res) => {
 
     // Assign lot to shipping
     lotDoc.shippingId = shipping._id;
+    lotDoc.transportAt = new Date();
     await lotDoc.save();
 
     return res.status(200).json({ success: true, lot: lotDoc });
