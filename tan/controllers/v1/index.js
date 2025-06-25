@@ -32,3 +32,6 @@ export { myShipping } from "./shipping/mine.js";
 export { getShippingContents } from "./shipping/getShippingContents.js";
 export { createShipping } from "./shipping/create.js";
 export { editShipping } from "./shipping/editShipping.js";
+
+// InspectLog
+export { getInspectLogs } from "./inspectLog/getInspectLogs.js";
