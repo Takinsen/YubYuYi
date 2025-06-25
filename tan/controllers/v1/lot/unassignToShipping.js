@@ -11,6 +11,7 @@ export const unassignToShipping = async (req, res) => {
     if (!lotDoc) lotDoc = await Lot.findOne({ displayId: lotId });
     if (!lotDoc) return res.status(404).json({ success: false, message: "Lot not found." });
     lotDoc.shippingId = null;
+    lotDoc.status = "sorting";
     lotDoc.transportAt = null;
     await lotDoc.save();
 

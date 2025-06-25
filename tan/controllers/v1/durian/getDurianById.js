@@ -118,7 +118,15 @@ const transformDurian = (doc, role, lang) => {
     },
     {
       inspectedAt: formatDateDMY(get(doc, "lotId.shippingId.inspect.inspectAt")),
-      status: get(doc, "lotId.shippingId.inspect.inspectAt") ? "completed" : "",
+      status: (() => {
+        const inspectAt = get(doc, "lotId.shippingId.inspect.inspectAt");
+        const inspectStatus = get(doc, "lotId.shippingId.inspect.status");
+        if (inspectAt) {
+          if (inspectStatus === "VERIFIED") return "completed";
+          if (inspectStatus === "REJECT") return "failed";
+        }
+        return "";
+      })(),
     },
     {
       arrivedAt: formatDateDMY(get(doc, "lotId.shippingId.arrivedAt")),
