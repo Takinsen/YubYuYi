@@ -38,7 +38,7 @@ export default function InfoScan() {
         <LogoutButton />
       </div>
       <div className={style.ContainerCard}>
-        <QrScanner key={id === '' ? 'scanner-initial' : 'scanner-reset'} ref={scannerRef} onScan={handleScan} />
+        <QrScanner ref={scannerRef} onScan={handleScan} />
         { id !== '' &&
       <div className={style.ActionContainer}>
         <Button variant='green-md' onClick={handleContinue}>ดุข้อมูล</Button>
