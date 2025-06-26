@@ -10,10 +10,11 @@ import { Button } from '@mantine/core';
 
 export default function InfoScan() {
   const router = useRouter();
-  const scannerRef = useRef<QrScannerHandle>(null);
-  const [id, setId] = useState('');
   const searchParams = useSearchParams();
   const refresh = searchParams.get('refresh') || '0';
+
+  const scannerRef = useRef<QrScannerHandle>(null);
+  const [id, setId] = useState('');
 
   const handleScan = async (id: string) => {
     console.log('Scanned ID:', id);
