@@ -29,6 +29,7 @@ body {
   color: var(--foreground);
   -webkit-text-stroke-width: 0 !important;
   font-synthesis: none !important;
+  height: 100vh;
 }
 
 .ContainerCardWhite{
