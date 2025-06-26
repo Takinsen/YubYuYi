@@ -21,7 +21,6 @@
 
 html{
   background: var(--mantine-color-primary-1);
-  padding: env(safe-area-inset);
 }
 
 body {

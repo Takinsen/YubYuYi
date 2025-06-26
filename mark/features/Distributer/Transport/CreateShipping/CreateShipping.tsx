@@ -4,100 +4,60 @@ import { Button, TextInput, Select } from "@mantine/core";
 import LogoRole from "@/components/logoRole/LogoRole";
 import LogoutButton from "@/components/logoutButton/LogoutButton";
 import { useRouter } from 'next/navigation';
-import { useState, useEffect, use } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { createShipping } from "@/api/shipping/apis";
 import { useAuth } from "@/providers/AuthContext";
-import searchFarm from "@/api/farm/searchFarm";
-import { Labrada } from "next/font/google";
 import { DateInput } from '@mantine/dates';
-import dayjs from 'dayjs';
 
 const CreateShipping = () => {
   const router = useRouter();
   const { user } = useAuth();
 
-  const [licensePlate, setLicensePlate] = useState('');
-  const [pickedAt, setPickedAt] = useState('');
-  const [displayId, setDisplayId] = useState('');
-  const [importBy, setImportBy] = useState<string | null>('');
-  const [exportBy, setExportBy] = useState<string | null>('');
+  const [form, setForm] = useState({
+    licensePlate: '',
+    pickedAt: '',
+    displayId: '',
+    importBy: '',
+    exportBy: '',
+  });
 
-  const gradeOptions = [
-    { value: 'A', label: 'A' },
-    { value: 'B', label: 'B' },
-    { value: 'C', label: 'C' },
-  ];
+  // debounce refs
+  const debounceTimers = useRef<Record<string, NodeJS.Timeout>>({});
 
-  const varietyOptions = [
-    { value: 'MONTHONG', label: 'หมอนทอง (Monthong)' },
-    { value: 'KANYAO', label: 'ก้่านยาว (Kanyao)' },
-    { value: 'CHANEE', label: 'ชะนี (Chanee)' },
-    { value: 'PUANGMANEE', label: 'พวงมะนี (Puangmanee)' },
-  ];
+  const handleChange = useCallback((field: string, value: string) => {
+    if (debounceTimers.current[field]) clearTimeout(debounceTimers.current[field]);
+    debounceTimers.current[field] = setTimeout(() => {
+      setForm((prev) => ({ ...prev, [field]: value }));
+    }, 30);
+  }, []);
 
-  const exporters = [
-    { value: "Siam Fruit Export Co., Ltd", label: "Siam Fruit Export Co., Ltd"},
-  ]
-
-  const importers = [
-    { value: "Shanghai Fresh Fruits Trading", label: "Shanghai Fresh Fruits Trading"},
-  ]
-
-  const handleBack = () => {
-    router.push('/distributer/transport');
+  const handleSelectChange = (field: string, value: string | null) => {
+    setForm((prev) => ({ ...prev, [field]: value || '' }));
   };
 
   const handleSubmit = async () => {
+    const { licensePlate, pickedAt, displayId, importBy, exportBy } = form;
+
     if (!licensePlate || !pickedAt || !displayId || !importBy || !exportBy) {
       alert("กรุณากรอกข้อมูลให้ครบถ้วน");
       return;
     }
-    const shippingData = {
-      licensePlate,
-      pickedAt,
-      displayId,
-      importBy,
-      exportBy
-    };
 
-    console.log("Lot Object:", shippingData);
-    
+    const shippingData = { licensePlate, pickedAt, displayId, importBy, exportBy };
+
     try {
       if (user?.token) {
-        const res = await createShipping(shippingData, user.token);
-        handleBack();
+        await createShipping(shippingData, user.token);
+        router.push('/distributer/transport');
       }
     } catch (error) {
-      console.error("Error creating lot:", error);
+      console.error("Error creating shipping:", error);
     }
-    
   };
-
-  useEffect(() => {
-    /*
-    const fetchFarms = async () => {
-      try {
-        if (user?.token) {
-          const res = await searchFarm(user.token);
-          
-          const mapped = res.farms.map((farm: any) => ({
-            value: farm._id,
-            label: `${farm.name} : ${farm.GAP}`,
-      }));
-          setFarms(mapped|| []);
-        }
-      } catch (error) {
-        console.error("Error fetching farms:", error);
-      }
-    };
-
-    fetchFarms();
-    */
-  }, [user]);
 
   return (
     <div className={style.Backdrop}>
-      <img className={style.BackdropArt} src="/images/PathBackDrop.svg" />
+      <img className={style.BackdropArt} src="/images/PathBackDrop.svg" alt="" />
       <div className={style.BackdropShade} />
       <div className={style.LogoContainer}>
         <LogoRole text="distributer" />
@@ -110,33 +70,61 @@ const CreateShipping = () => {
         <div className={style.devider} />
         <div className={style.dataContainer}>
           <div className={style.InputLable}>ทะเบียนรถ (license plate)</div>
-         <TextInput value={licensePlate} onChange={(e) => setLicensePlate(e.currentTarget.value)} className={style.TextInput} />
+          <TextInput
+            defaultValue={form.licensePlate}
+            onChange={(e) => handleChange('licensePlate', e.currentTarget.value)}
+            className={style.TextInput}
+          />
 
           <div className={style.InputLable}>ผู้ส่งออก (exporter)</div>
-           <Select variant="select" onChange={(value) => {setExportBy(value)}} className={style.TextInput}  placeholder="เลือกฟาร์ม" data={exporters} searchable={true}/>
-          
+          <Select
+            value={form.exportBy}
+            onChange={(value) => handleSelectChange('exportBy', value)}
+            className={style.TextInput}
+            placeholder="เลือกฟาร์ม"
+            data={[{ value: "Siam Fruit Export Co., Ltd", label: "Siam Fruit Export Co., Ltd" }]}
+            searchable
+          />
+
           <div className={style.InputLable}>ผู้นำเข้า (importer)</div>
-          <Select variant="select" onChange={(value) => {setImportBy(value)}} className={style.TextInput}  placeholder="เลือกฟาร์ม" data={importers} searchable={true}/>
+          <Select
+            value={form.importBy}
+            onChange={(value) => handleSelectChange('importBy', value)}
+            className={style.TextInput}
+            placeholder="เลือกฟาร์ม"
+            data={[{ value: "Shanghai Fresh Fruits Trading", label: "Shanghai Fresh Fruits Trading" }]}
+            searchable
+          />
 
           <div className={style.InputLable}>รหัสขนส่ง (shipping id)</div>
-          <TextInput value={displayId} onChange={(e) => setDisplayId(e.currentTarget.value)} className={style.TextInput} />
+          <TextInput
+            defaultValue={form.displayId}
+            onChange={(e) => handleChange('displayId', e.currentTarget.value)}
+            className={style.TextInput}
+          />
 
           <div className={style.InputLable}>วันที่มารับ (pickup date)</div>
-<DateInput
-  value={pickedAt ? new Date(pickedAt) : null}
-  onChange={(date) => setPickedAt(date?.toString() || '')}
-  className={style.TextInput}
-  valueFormat="DD/MM/YYYY"
-  placeholder="เลือกวันที่"
-/>
-
+          <DateInput
+            value={form.pickedAt ? new Date(form.pickedAt) : null}
+            onChange={(date) =>
+              setForm((prev) => ({
+                ...prev,
+                pickedAt: date ? date.toString() : '',
+              }))
+            }
+            className={style.TextInput}
+            valueFormat="DD/MM/YYYY"
+            placeholder="เลือกวันที่"
+          />
         </div>
 
         <div className={style.ActionContainer}>
           <Button variant='green-md' onClick={handleSubmit}>บันทึก</Button>
         </div>
         <div className={style.ButtonContainer}>
-          <Button onClick={handleBack}>{'<-'} ย้อนกลับ</Button>
+          <Button onClick={() => router.push('/distributer/transport')}>
+            {'<-'} ย้อนกลับ
+          </Button>
         </div>
       </div>
     </div>
