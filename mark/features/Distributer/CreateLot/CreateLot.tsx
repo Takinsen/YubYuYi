@@ -146,6 +146,7 @@ const handleChange = useCallback((field: string, value: string) => {
 
           <div className={style.InputLable}>น้ำหนักสุทธิ (net)</div>
           <TextInput
+          type="number"
             value={form.netWeight}
             onChange={(e) => handleChange('netWeight', e.currentTarget.value)}
             className={style.TextInput}
@@ -153,6 +154,7 @@ const handleChange = useCallback((field: string, value: string) => {
 
           <div className={style.InputLable}>น้ำหนักรวม (gross)</div>
           <TextInput
+          type="number"
             value={form.grossWeight}
             onChange={(e) => handleChange('grossWeight', e.currentTarget.value)}
             className={style.TextInput}
@@ -181,18 +183,21 @@ const handleChange = useCallback((field: string, value: string) => {
           <div className={style.InputLable}>ขนาดลัง (ซม.)</div>
           <div className={style.InputGroup}>
             <TextInput
+            type="number"
               value={form.width}
               placeholder="กว้าง"
               onChange={(e) => handleChange('width', e.currentTarget.value)}
               className={style.TextInput}
             />
             <TextInput
+            type="number"
               value={form.length}
               placeholder="ยาว"
               onChange={(e) => handleChange('length', e.currentTarget.value)}
               className={style.TextInput}
             />
             <TextInput
+            type="number"
               value={form.height}
               placeholder="สูง"
               onChange={(e) => handleChange('height', e.currentTarget.value)}
