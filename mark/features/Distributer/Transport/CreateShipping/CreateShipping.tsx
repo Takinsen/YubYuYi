@@ -9,6 +9,8 @@ import { createShipping } from "@/api/shipping/apis";
 import { useAuth } from "@/providers/AuthContext";
 import searchFarm from "@/api/farm/searchFarm";
 import { Labrada } from "next/font/google";
+import { DateInput } from '@mantine/dates';
+import dayjs from 'dayjs';
 
 const CreateShipping = () => {
   const router = useRouter();
@@ -120,7 +122,13 @@ const CreateShipping = () => {
           <TextInput value={displayId} onChange={(e) => setDisplayId(e.currentTarget.value)} className={style.TextInput} />
 
           <div className={style.InputLable}>วันที่มารับ (pickup date)</div>
-          <TextInput value={pickedAt} onChange={(e) => setPickedAt(e.currentTarget.value)} className={style.TextInput} />
+<DateInput
+  value={pickedAt ? new Date(pickedAt) : null}
+  onChange={(date) => setPickedAt(date?.toString() || '')}
+  className={style.TextInput}
+  valueFormat="DD/MM/YYYY"
+  placeholder="เลือกวันที่"
+/>
 
         </div>
 

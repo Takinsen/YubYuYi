@@ -9,6 +9,7 @@ import {
   MantineProvider,
   mantineHtmlProps,
 } from "@mantine/core";
+import { DatesProvider } from "@mantine/dates";
 import { mergedTheme, resolver } from "@/theme";
 
 import { Inter } from "next/font/google";
@@ -45,7 +46,9 @@ export default function RootLayout({
     >
       <body>
         <MantineProvider theme={mergedTheme} cssVariablesResolver={resolver}>
-          <AuthProvider>{children}</AuthProvider>
+          <DatesProvider settings={{ locale: "en", firstDayOfWeek: 0 }}>
+            <AuthProvider>{children}</AuthProvider>
+          </DatesProvider>
         </MantineProvider>
       </body>
     </html>
