@@ -27,7 +27,7 @@ export default function Info({ id }: InfoProps) {
   }
 
   const handleReScan = () => {
-    router.replace(`/distributer/scan/infoscan?refresh=${Date.now()}`);
+    router.push(`/distributer/scan/infoscan?refresh=${Date.now()}`);
   }
 
   useEffect(() => {
