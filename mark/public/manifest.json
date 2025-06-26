@@ -1,0 +1,20 @@
+{
+  "name": "DurianPass",
+  "short_name": "Durian",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/icons/DurianLine.svg",
+      "sizes": "192x192",
+      "type": "image/svg"
+    },
+    {
+      "src": "/icons/DurianLine.svg",
+      "sizes": "512x512",
+      "type": "image/svg"
+    }
+  ]
+}
