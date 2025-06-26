@@ -1,7 +1,6 @@
-
 'use client';
 import style from './InfoScan.module.css'
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useRouter , useSearchParams } from 'next/navigation';
 import LogoRole from "@/components/logoRole/LogoRole";
 import LogoutButton from "@/components/logoutButton/LogoutButton";
@@ -15,6 +14,14 @@ export default function InfoScan() {
 
   const scannerRef = useRef<QrScannerHandle>(null);
   const [id, setId] = useState('');
+
+  useEffect(() => {
+    // Reset scanner when component mounts or refresh changes
+    if (scannerRef.current) {
+      console.log('Resetting scanner');
+      scannerRef.current.stopScanner().catch(() => {});
+    }
+  }, [refresh]);
 
   const handleScan = async (id: string) => {
     console.log('Scanned ID:', id);
