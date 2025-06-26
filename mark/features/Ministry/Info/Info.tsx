@@ -45,7 +45,7 @@ export default function Info({ id }: InfoProps) {
       return;
     }
     
-    const res = await inspect (id, status, note, user.toke);
+    const res = await inspect (id, status, note, user.token);
     handleBack();
   }
 
