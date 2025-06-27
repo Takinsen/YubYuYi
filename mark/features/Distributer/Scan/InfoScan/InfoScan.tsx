@@ -49,6 +49,7 @@ export default function InfoScan() {
       </div>
       <div className={style.ContainerCard}>
         <QrScanner key={refresh} ref={scannerRef} onScan={handleScan} />
+        <div className={style.Desc}>แสกน QR code บนขั้วทุเรียนเพื่อดูข้อมูล</div>
         { id !== '' &&
       <div className={style.ActionContainer}>
         <Button variant='green-md' onClick={handleContinue}>ดูข้อมูล</Button>

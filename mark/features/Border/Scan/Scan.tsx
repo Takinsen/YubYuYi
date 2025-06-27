@@ -39,6 +39,7 @@ export default function Scan() {
       </div>
       <div className={style.ContainerCard}>
         <QrScanner ref={scannerRef} onScan={handleScan} />
+        <div className={style.Desc}>Scan QR code on durian or shipping box to inspect and approve</div>
         { id !== '' &&
       <div className={style.ActionContainer}>
         <Button variant='green-md' onClick={handleContinue}>View data</Button>

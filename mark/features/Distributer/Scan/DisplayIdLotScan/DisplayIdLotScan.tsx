@@ -48,6 +48,7 @@ const DisplayIdLotScan = ({ lotId }: AssignProps) => {
       </div>
       <div className={style.ContainerCard}>
         <QrScanner ref={scannerRef} onScan={handleScan} />
+        <div className={style.Desc}>แสกน QR code บนกล่องที่จะใส่ทุเรียนล็อตนี้</div>
         { id !== '' &&
       <div className={style.ActionContainer}>
         <Button variant='green-md' onClick={handleContinue}>กำหนดกล่อง</Button>

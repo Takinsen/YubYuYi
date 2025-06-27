@@ -48,6 +48,7 @@ const AssignBoxScan = ({ shippingId }: AssignProps) => {
       </div>
       <div className={style.ContainerCard}>
         <QrScanner ref={scannerRef} onScan={handleScan} />
+         <div className={style.Desc}>แสกน QR code บนกล่องที่บรรจุเรียบร้อยเพื่อเพิ่มเข้าสู่รอบขนส่ง</div>
         { id !== '' &&
       <div className={style.ActionContainer}>
         <Button variant='green-md' onClick={handleContinue}>เพิ่มกล่อง</Button>

@@ -48,6 +48,7 @@ export default function AssignDurianScan({ lotId }: AssignProps) {
       </div>
       <div className={style.ContainerCard}>
         <QrScanner ref={scannerRef} onScan={handleScan} />
+        <div className={style.Desc}>แสกน QR code บนขั้วทุเรียนเพื่อเพิ่มทุเรียนเข้าระบบ</div>
         { id !== '' &&
       <div className={style.ActionContainer}>
         <Button variant='green-md' onClick={handleContinue}>เพิ่มทุเรียน</Button>

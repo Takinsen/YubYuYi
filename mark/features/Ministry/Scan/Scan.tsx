@@ -39,6 +39,7 @@ export default function Scan() {
       </div>
       <div className={style.ContainerCard}>
         <QrScanner ref={scannerRef} onScan={handleScan} />
+        <div className={style.Desc}>แสกน Qr code เพื่อตรวจสอบและดูข้อมูลทุเรียน</div>
         { id !== '' &&
       <div className={style.ActionContainer}>
         <Button variant='green-md' onClick={handleContinue}>ดุข้อมูล</Button>
