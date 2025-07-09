@@ -63,6 +63,8 @@ const COMMON_GROUP = [
     pallet: "lotId.palletId",
     import: "lotId.shippingId.importBy",
     export: "lotId.shippingId.exportBy",
+    transportId: "lotId.shippingId.displayId",
+    containerId: "lotId.shippingId.containerId",
   }
 ];
 

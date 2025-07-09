@@ -17,6 +17,7 @@ const CreateShipping = () => {
     licensePlate: '',
     pickedAt: '',
     displayId: '',
+    containerId: '',
     importBy: '',
     exportBy: '',
   });
@@ -36,14 +37,14 @@ const CreateShipping = () => {
   };
 
   const handleSubmit = async () => {
-    const { licensePlate, pickedAt, displayId, importBy, exportBy } = form;
+    const { licensePlate, pickedAt, displayId, containerId, importBy, exportBy } = form;
 
-    if (!licensePlate || !pickedAt || !displayId || !importBy || !exportBy) {
+    if (!licensePlate || !pickedAt || !displayId || !containerId || !importBy || !exportBy) {
       alert("กรุณากรอกข้อมูลให้ครบถ้วน");
       return;
     }
 
-    const shippingData = { licensePlate, pickedAt, displayId, importBy, exportBy };
+    const shippingData = { licensePlate, pickedAt, displayId, containerId, importBy, exportBy };
 
     try {
       if (user?.token) {
@@ -69,11 +70,39 @@ const CreateShipping = () => {
         <div className={style.Title}>ข้อมูลการขนส่ง</div>
         <div className={style.devider} />
         <div className={style.dataContainer}>
+          <div className={style.InputLable}>รหัสขนส่ง (shipping id)</div>
+          <TextInput
+            defaultValue={form.displayId}
+            onChange={(e) => handleChange('displayId', e.currentTarget.value)}
+            className={style.TextInput}
+          />
+
+          <div className={style.InputLable}>รหัสคอนเทนเนอร์ (container id)</div>
+          <TextInput
+            defaultValue={form.containerId}
+            onChange={(e) => handleChange('containerId', e.currentTarget.value)}
+            className={style.TextInput}
+          />
+
           <div className={style.InputLable}>ทะเบียนรถ (license plate)</div>
           <TextInput
             defaultValue={form.licensePlate}
             onChange={(e) => handleChange('licensePlate', e.currentTarget.value)}
             className={style.TextInput}
+          />
+
+          <div className={style.InputLable}>วันที่มารับ (pickup date)</div>
+          <DateInput
+            value={form.pickedAt ? new Date(form.pickedAt) : null}
+            onChange={(date) =>
+              setForm((prev) => ({
+                ...prev,
+                pickedAt: date ? date.toString() : '',
+              }))
+            }
+            className={style.TextInput}
+            valueFormat="DD/MM/YYYY"
+            placeholder="เลือกวันที่"
           />
 
           <div className={style.InputLable}>ผู้ส่งออก (exporter)</div>
@@ -96,26 +125,6 @@ const CreateShipping = () => {
             searchable
           />
 
-          <div className={style.InputLable}>รหัสขนส่ง (shipping id)</div>
-          <TextInput
-            defaultValue={form.displayId}
-            onChange={(e) => handleChange('displayId', e.currentTarget.value)}
-            className={style.TextInput}
-          />
-
-          <div className={style.InputLable}>วันที่มารับ (pickup date)</div>
-          <DateInput
-            value={form.pickedAt ? new Date(form.pickedAt) : null}
-            onChange={(date) =>
-              setForm((prev) => ({
-                ...prev,
-                pickedAt: date ? date.toString() : '',
-              }))
-            }
-            className={style.TextInput}
-            valueFormat="DD/MM/YYYY"
-            placeholder="เลือกวันที่"
-          />
         </div>
 
         <div className={style.ActionContainer}>

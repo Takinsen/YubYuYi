@@ -8,8 +8,8 @@ const LOT_STATUS = {
     en: "Transporting"
   },
   inspecting: {
-    th: "กำลังตรวจสอบคุณภาพ",
-    en: "Inspecting"
+    th: "ตรวจสอบคุณภาพแล้ว",
+    en: "Inspected"
   },
   arriving: {
     th: "จัดส่งแล้ว",
