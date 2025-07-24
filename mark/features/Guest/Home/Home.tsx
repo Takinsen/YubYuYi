@@ -58,11 +58,10 @@ export default function Home({ id }: InfoProps) {
           <LoginButton />
         </div>
         <div className={style.ContainerCard}>
-           <div className={style.Title}>Want to know about this Durian?</div>
            <div className={style.DurianLineContainer}>
            <img className={style.DurianLine} src="/images/DurianLine.svg" />
            </div>
-           <div className={style.Instruction}>Scan Qr using the button below</div>
+           <div className={style.Instruction}>Scan Qr using the button below to view the durian's info</div>
           <div className={style.scanContainer}>
             <Button onClick={handleScan} variant="biground">
               <img className={style.scanIcon} src="/icons/scanWhite.svg"/>
@@ -76,12 +75,14 @@ export default function Home({ id }: InfoProps) {
     <div className={style.Backdrop}>
       <img className={style.BackdropArt} src="/images/PathBackDrop.svg" />
       <div className={style.BackdropShade} />
-      <img className={style.Logo} src="/images/LogoWhite.svg" />
+       <div className={style.LogoContainer}>
+        <LogoRole text={"Customer"} />
+      </div>
       <div className={style.subWhiteText}>Certified, Fresh<br/> Thai Durian</div>
       <div className={style.LoginButtonContainer}>
         <LoginButton />
       </div>
-      <div className={style.ContainerCard}>
+      <div className={style.ContainerCardFull}>
         <CheckpontBar {...formatData(data.timeline)} />
 
         {loading ? (
