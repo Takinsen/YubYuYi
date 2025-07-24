@@ -8,6 +8,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { createShipping } from "@/api/shipping/apis";
 import { useAuth } from "@/providers/AuthContext";
 import { DateInput } from '@mantine/dates';
+import '@mantine/dates/styles.css';
 
 const CreateShipping = () => {
   const router = useRouter();

@@ -17,6 +17,17 @@
   box-sizing: border-box;
   padding: 33px;
 }
+.ContainerCardFull{
+  border-radius: 31px 31px 0px 0px;
+  background-color: white;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 117px;
+  box-sizing: border-box;
+  padding: 33px;
+}
 .BackdropArt{
   width: 100vw;
 }
@@ -164,4 +175,10 @@
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.LogoContainer{
+  position: absolute;
+  top: 48px;
+  left: 33px;
 }
