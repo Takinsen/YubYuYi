@@ -78,7 +78,7 @@ export default function Home({ id }: InfoProps) {
        <div className={style.LogoContainer}>
         <LogoRole text={"Customer"} />
       </div>
-      <div className={style.subWhiteText}>Certified, Fresh<br/> Thai Durian</div>
+      <div className={style.subWhiteText}>Certified, Fresh <br/> Thai Durian</div>
       <div className={style.LoginButtonContainer}>
         <LoginButton />
       </div>

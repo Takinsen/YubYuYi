@@ -36,6 +36,7 @@ export default function Info({ id }: InfoProps) {
         console.log(user);
         if (user?.token) {
           const res = await getDurian(id, "th", user.token);
+          if (res.status !== false)
           setData(res);
         }
       } catch (error) {

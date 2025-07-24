@@ -52,6 +52,7 @@ export default function Info({ id }: InfoProps) {
         console.log(user);
         if (user?.token) {
           const res = await getDurian(id, "en", user.token);
+          if (res.status !== false)
           setData(res);
         }
       } catch (error) {
@@ -64,8 +65,6 @@ export default function Info({ id }: InfoProps) {
     fetchData();
   }, [id, user]);
 
-  if (!data?.timeline) return
-
   return (
     <div className={style.Backdrop}>
         <img className={style.BackdropArt} src="/images/PathBackDrop.svg" />
@@ -77,14 +76,18 @@ export default function Info({ id }: InfoProps) {
         <LogoutButton />
       </div>
       <div className={style.ContainerCard}>
-        <CheckpontBar {...formatData(data.timeline)}/>
 
       {loading ? (
         <p>Loading...</p>
-      ) : (
+      ) : data ? (
+        <>
+        <CheckpontBar {...formatData(data.timeline)}/>
         <div className={style.dataContainer}>
           <DataField data={data.data}/>
         </div>
+        </>
+      ) : (
+        <p>no data found of durian id: <strong>{id}</strong></p>
       )}
       </div>
 
