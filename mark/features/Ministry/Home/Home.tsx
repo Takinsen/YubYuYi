@@ -20,7 +20,7 @@ const Home = () => {
       if (user?.token) {
         const res = await getInspectLog(user.token)
   
-        setLog(res.data);
+        setLog(res.data || []);
       } 
     } catch (error) {
       console.error("Failed to fetch lot data", error);
@@ -66,7 +66,7 @@ const Home = () => {
                   log={{
                     status: l.status,
                     inspectedAt: l.inspectedAt,
-                    displayId: l.shippingId.displayId,
+                    displayId: l?.shippingId?.displayId || "ไม่พบรหัส",
                   }}
                 />
     
