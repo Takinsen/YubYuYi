@@ -39,3 +39,6 @@ export { getInspectLogs } from "./inspectLog/getInspectLogs.js";
 
 // BorderLog
 export { getBorderLogs } from "./borderLog/getBorderLog.js";
+
+// Utility
+export { resetData } from "./utility/resetData.js";
