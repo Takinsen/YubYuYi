@@ -12,6 +12,8 @@ const FIELD_MAP = {
   grade:          { th: "เกรดคุณภาพ",          en: "Grade" },
   verify:         { th: "ตรวจสอบ GAP แล้ว",     en: "Verify GAP" },
   pallet:         { th: "หมายเลขพาเลท",        en: "Pallet No." },
+  transportId:    { th: "รหัสขนส่ง",            en: "Transport No." },
+  containerId:    { th: "หมายเลขตู้คอนเทนเนอร์", en: "Container No." },
   import:         { th: "ผู้นำเข้า",              en: "Importer" },
   export:         { th: "ผู้ส่งออก",              en: "Exporter" },
   inspectedAt:    { th: "วันที่ตรวจสอบ",           en: "Inspected From Thailand Date" },

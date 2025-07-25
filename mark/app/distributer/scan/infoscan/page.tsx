@@ -1,11 +1,11 @@
-import React from 'react'
+import { Suspense } from 'react'
 
 import InfoScan from '@/features/Distributer/Scan/InfoScan/InfoScan'
 
-const page = () => {
+export default function Page() {
   return (
-    <InfoScan />
+    <Suspense fallback={<div>Loading...</div>}>
+      <InfoScan />
+    </Suspense>
   )
 }
-
-export default page

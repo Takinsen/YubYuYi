@@ -5,9 +5,29 @@ import LogoRole from "@/components/logoRole/LogoRole";
 import LogoutButton from "@/components/logoutButton/LogoutButton";
 import { useAuth } from "@/providers/AuthContext";
 import Link from "next/link";
+import { getLot } from "@/api/lot/apis";
+import Lot from "./components/lot/Lot";
+import { use, useEffect, useState } from "react";
 
 const Home = () => {
   const { user } = useAuth();
+  const [lots, setLots] = useState<any>([]);
+
+  useEffect(() => {
+    const fetchLots = async () => {
+    try{
+      if (user?.token) {
+        const res = await getLot(user.token)
+  
+        setLots(res.lots.reverse());
+      } 
+    } catch (error) {
+      console.error("Failed to fetch lot data", error);
+    }
+  }
+
+    fetchLots();
+  }, [user]);
 
   if ( !user ) {
     return;
@@ -35,6 +55,30 @@ const Home = () => {
         placeholder="ค้นหาด้วยรหัสติดตามสินค้า"
         />
         <div className={style.devider}/>
+          <div className={style.headerContainer}>
+          <div className={style.Header}>รายการล็อตสินค้า</div>
+         
+        </div>
+         <div className={style.dataContainer}>
+          {lots.length > 0 ? (
+            lots.map((lot:any) => (
+                <Lot 
+                  key={lot._id}
+                  lot={{
+                    status: lot.status,
+                    lotId: lot._id,
+                    farmId: lot.farmId,
+                    farmName: lot.farmName,
+                    variety: lot.variety,
+                    createdAt: lot.createdAt,
+                    displayId: lot.displayId,
+                  }}
+                />
+            ))
+          ) : (
+            <div className={style.noData}>ไม่มีข้อมูลล็อตสินค้า</div>
+          )}
+        </div>
 
         <div className={style.scanContainer}>
           <Link href="/farmer/scan">

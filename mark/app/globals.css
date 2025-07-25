@@ -19,11 +19,16 @@
   }
 }
 
+html{
+  background: var(--mantine-color-primary-1);
+}
+
 body {
-  background: var(--background);
+  background: var(--mantine-color-primary-1);
   color: var(--foreground);
   -webkit-text-stroke-width: 0 !important;
   font-synthesis: none !important;
+  height: 100vh;
 }
 
 .ContainerCardWhite{

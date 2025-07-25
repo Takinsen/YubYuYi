@@ -4,8 +4,8 @@ import { Button, TextInput, Select } from "@mantine/core";
 import LogoRole from "@/components/logoRole/LogoRole";
 import LogoutButton from "@/components/logoutButton/LogoutButton";
 import { useRouter } from 'next/navigation';
-import { useState, useEffect, use } from "react";
-import createLot from "@/api/lot/createLot";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { createLot } from "@/api/lot/apis";
 import { useAuth } from "@/providers/AuthContext";
 import searchFarm from "@/api/farm/searchFarm";
 
@@ -13,18 +13,20 @@ const CreateLot = () => {
   const router = useRouter();
   const { user } = useAuth();
 
-  const [farmId, setFarmId] = useState<string | null>('');
-  const [netWeight, setNetWeight] = useState('');
-  const [grossWeight, setGrossWeight] = useState('');
-  const [grade, setGrade] = useState<string | null>('');
-  const [variety, setVariety] = useState<string | null>('');
-  const [width, setWidth] = useState('');
-  const [length, setLength] = useState('');
-  const [height, setHeight] = useState('');
-  const [palletId, setPalletId] = useState('');
-  const [importBy, setImportBy] = useState('');
-  const [exportBy, setExportBy] = useState('');
+  const [loading, setLoading] = useState(false);
   const [farms, setFarms] = useState([]);
+
+  const [form, setForm] = useState({
+    farmId: '',
+    netWeight: '',
+    grossWeight: '',
+    grade: '',
+    variety: '',
+    width: '',
+    length: '',
+    height: '',
+    palletId: ''
+  });
 
   const gradeOptions = [
     { value: 'A', label: 'A' },
@@ -39,15 +41,35 @@ const CreateLot = () => {
     { value: 'PUANGMANEE', label: 'พวงมะนี (Puangmanee)' },
   ];
 
+  const typingTimeout = 30; // in ms
+
+const debounceTimer = useRef<Record<string, NodeJS.Timeout>>({});
+
+const handleChange = useCallback((field: string, value: string) => {
+  if (debounceTimer.current[field]) {
+    clearTimeout(debounceTimer.current[field]);
+  }
+
+  debounceTimer.current[field] = setTimeout(() => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+  }, typingTimeout);
+}, []);
+
   const handleBack = () => {
     router.push('/distributer/home');
   };
 
   const handleSubmit = async () => {
-    if (!farmId || !netWeight || !grossWeight || !grade || !variety || !width || !length || !height || !palletId || !importBy || !exportBy) {
+    const {
+      farmId, netWeight, grossWeight, grade, variety,
+      width, length, height, palletId
+    } = form;
+
+    if (!farmId || !netWeight || !grossWeight || !grade || !variety || !width || !length || !height || !palletId) {
       alert("กรุณากรอกข้อมูลให้ครบถ้วน");
       return;
     }
+
     const lotData = {
       farmId,
       weight: {
@@ -55,8 +77,8 @@ const CreateLot = () => {
         gross: Number(grossWeight)
       },
       grade,
-      type: "FRESH", // fixed
-      verify: false, // fixed
+      type: "FRESH",
+      verify: false,
       size: {
         width: Number(width),
         length: Number(length),
@@ -64,21 +86,19 @@ const CreateLot = () => {
       },
       variety,
       palletId,
-      importBy,
-      exportBy
     };
 
-    console.log("Lot Object:", lotData);
-    
+    setLoading(true);
     try {
       if (user?.token) {
-        const res = await createLot(lotData, user.token);
+        await createLot(lotData, user.token);
         handleBack();
       }
     } catch (error) {
       console.error("Error creating lot:", error);
+    } finally {
+      setLoading(false);
     }
-    
   };
 
   useEffect(() => {
@@ -86,23 +106,21 @@ const CreateLot = () => {
       try {
         if (user?.token) {
           const res = await searchFarm(user.token);
-          
           const mapped = res.farms.map((farm: any) => ({
             value: farm._id,
             label: `${farm.name} : ${farm.GAP}`,
-      }));
-          setFarms(mapped|| []);
+          }));
+          setFarms(mapped || []);
         }
       } catch (error) {
         console.error("Error fetching farms:", error);
       }
     };
-
     fetchFarms();
   }, [user]);
 
   return (
-    <div className={style.Backdrop}>
+    <div className={style.Backdrop} style={{ overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}>
       <img className={style.BackdropArt} src="/images/PathBackDrop.svg" />
       <div className={style.BackdropShade} />
       <div className={style.LogoContainer}>
@@ -114,42 +132,97 @@ const CreateLot = () => {
       <div className={style.ContainerCard}>
         <div className={style.Title}>ข้อมูลล็อต</div>
         <div className={style.devider} />
+
         <div className={style.dataContainer}>
           <div className={style.InputLable}>รหัสฟาร์ม (farmId)</div>
-          <Select variant="select" onChange={(value) => {setFarmId(value)}} className={style.TextInput}  placeholder="เลือกฟาร์ม" data={farms} searchable={true}/>
+          <Select
+            onChange={(value) => handleChange('farmId', value || '')}
+            value={form.farmId}
+            placeholder="เลือกฟาร์ม"
+            data={farms}
+            searchable
+            className={style.TextInput}
+          />
 
           <div className={style.InputLable}>น้ำหนักสุทธิ (net)</div>
-          <TextInput value={netWeight} onChange={(e) => setNetWeight(e.currentTarget.value)} className={style.TextInput} />
+          <TextInput
+          type="number"
+            value={form.netWeight}
+            onChange={(e) => handleChange('netWeight', e.currentTarget.value)}
+            className={style.TextInput}
+          />
 
           <div className={style.InputLable}>น้ำหนักรวม (gross)</div>
-          <TextInput value={grossWeight} onChange={(e) => setGrossWeight(e.currentTarget.value)} className={style.TextInput} />
+          <TextInput
+          type="number"
+            value={form.grossWeight}
+            onChange={(e) => handleChange('grossWeight', e.currentTarget.value)}
+            className={style.TextInput}
+          />
 
           <div className={style.InputLable}>เกรดทุเรียน</div>
-          <Select variant="select" onChange={(value) => {setGrade(value)}} className={style.TextInput}  placeholder="เลือกเกรด" data={gradeOptions} searchable={true}/>
+          <Select
+            onChange={(value) => handleChange('grade', value || '')}
+            value={form.grade}
+            placeholder="เลือกเกรด"
+            data={gradeOptions}
+            searchable
+            className={style.TextInput}
+          />
 
           <div className={style.InputLable}>พันธุ์ทุเรียน</div>
-          <Select variant="select" onChange={(value) => {setVariety(value)}} className={style.TextInput}  placeholder="เลือกสายพันธุ์" data={varietyOptions} searchable={true}/>
-          
+          <Select
+            onChange={(value) => handleChange('variety', value || '')}
+            value={form.variety}
+            placeholder="เลือกสายพันธุ์"
+            data={varietyOptions}
+            searchable
+            className={style.TextInput}
+          />
+
           <div className={style.InputLable}>ขนาดลัง (ซม.)</div>
           <div className={style.InputGroup}>
-          <TextInput value={width} placeholder="กว้าง" onChange={(e) => setWidth(e.currentTarget.value)} className={style.TextInput} />
-          <TextInput value={length} placeholder="ยาว" onChange={(e) => setLength(e.currentTarget.value)} className={style.TextInput} />
-          <TextInput value={height} placeholder="สูง" onChange={(e) => setHeight(e.currentTarget.value)} className={style.TextInput} />
+            <TextInput
+            type="number"
+              value={form.width}
+              placeholder="กว้าง"
+              onChange={(e) => handleChange('width', e.currentTarget.value)}
+              className={style.TextInput}
+            />
+            <TextInput
+            type="number"
+              value={form.length}
+              placeholder="ยาว"
+              onChange={(e) => handleChange('length', e.currentTarget.value)}
+              className={style.TextInput}
+            />
+            <TextInput
+            type="number"
+              value={form.height}
+              placeholder="สูง"
+              onChange={(e) => handleChange('height', e.currentTarget.value)}
+              className={style.TextInput}
+            />
           </div>
+
           <div className={style.InputLable}>รหัสพาเลท (palletId)</div>
-          <TextInput value={palletId} onChange={(e) => setPalletId(e.currentTarget.value)} className={style.TextInput} />
-
-          <div className={style.InputLable}>นำเข้าโดย</div>
-          <TextInput value={importBy} onChange={(e) => setImportBy(e.currentTarget.value)} className={style.TextInput} />
-
-          <div className={style.InputLable}>ส่งออกโดย</div>
-          <TextInput value={exportBy} onChange={(e) => setExportBy(e.currentTarget.value)} className={style.TextInput} />
-
+          <TextInput
+            value={form.palletId}
+            onChange={(e) => handleChange('palletId', e.currentTarget.value)}
+            className={style.TextInput}
+          />
         </div>
 
         <div className={style.ActionContainer}>
-          <Button variant='green-md' onClick={handleSubmit}>บันทึก</Button>
+          <Button
+            variant='green-md'
+            onClick={handleSubmit}
+            disabled={loading}
+          >
+            {loading ? 'กำลังบันทึก...' : 'บันทึก'}
+          </Button>
         </div>
+
         <div className={style.ButtonContainer}>
           <Button onClick={handleBack}>{'<-'} ย้อนกลับ</Button>
         </div>

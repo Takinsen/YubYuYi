@@ -11,7 +11,7 @@ interface CheckpointBarProps {
 }
 
 export default function formatData(rawData: any[]): CheckpointBarProps {
-  const [obj1, obj2, obj3, obj4] = rawData;
+  const [obj1, obj2, obj3, obj4] = rawData || [{"": null, "": null }, { "": null, "": null }, { "": null, "": null }, { "": null, "": null }];
 
   const toPoint = (entry: any): PointData => {
     const [dateKey, statusKey] = Object.keys(entry);
