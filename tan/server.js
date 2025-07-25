@@ -27,7 +27,7 @@ const initializeServer = async () =>{
         // await redisClient.connect();
 
         server.listen(PORT , '0.0.0.0', () => {
-            console.log(`🎉 ${process.env.PROJECT_NAME} backend server is live at ${process.env.BACKEND_URL} 🎉`);
+            console.log(`🎉 ${process.env.PROJECT_NAME} backend server is live 🎉`);
         });
     }
     catch(err){

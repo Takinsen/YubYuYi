@@ -1,38 +1,67 @@
-# Stage 1: Build the Next.js app
-FROM node:20-alpine AS builder
+# Multi-stage build for optimized Next.js frontend
+FROM node:20-alpine AS base
 
+# Install security updates and dumb-init
+RUN apk update && apk upgrade && apk add --no-cache libc6-compat dumb-init
+
+# Create app directory and non-root user
 WORKDIR /app
+RUN addgroup -g 1001 -S nodejs && adduser -S nodejs -u 1001
 
-# Copy package.json and package-lock.json (if any)
+# ================================
+# Dependencies stage
+# ================================
+
+FROM base AS deps
+
+# Copy package files
 COPY package*.json ./
 
 # Install dependencies
 RUN npm ci
 
-# Copy all frontend files
-COPY . .
-
-# Build Next.js for production
-RUN npm run build
-
-# Stage 2: Run the built app
-FROM node:20-alpine AS runner
+# ================================
+# Builder stage
+# ================================
+FROM base AS builder
 
 WORKDIR /app
 
+# Copy dependencies
+COPY --from=deps /app/node_modules ./node_modules
+
+# Copy source code
+COPY . .
+
+# Disable Next.js telemetry
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# Build Next.js application
+RUN npm run build
+
+# ================================
+# Production stage
+# ================================
+FROM base AS runner
+
+# Set production environment
 ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
 
-# Copy only necessary files from build stage
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/next.config.mjs ./
+# Copy built application
+COPY --from=builder --chown=nodejs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nodejs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nodejs:nodejs /app/public ./public
 
-# Install only production dependencies
-RUN npm ci --omit=dev
+# Switch to non-root user
+USER nodejs
 
-# Expose Next.js default port
+# Expose port
 EXPOSE 3000
 
-# Start Next.js app
-CMD ["npm", "start"]
+# Use dumb-init to handle signals properly
+ENTRYPOINT ["dumb-init", "--"]
+
+# Start Next.js server
+CMD ["npm", "run", "start"]

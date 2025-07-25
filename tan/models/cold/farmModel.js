@@ -6,7 +6,7 @@ const farmSchema = new mongoose.Schema(
       th: { type: String , required: true },
       en: { type: String , required: true },
     },
-    GAP: { type: String, required: true, unique: true },
+    GAP: { type: String, required: true },
   },
   {
     toJSON: { virtuals: true },
