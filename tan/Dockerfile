@@ -1,3 +1,4 @@
+# Multi-stage build for optimized Node.js backend
 FROM node:20-alpine AS base
 
 # Install security updates and dumb-init
@@ -10,24 +11,18 @@ RUN addgroup -g 1001 -S nodejs && adduser -S nodejs -u 1001
 # ================================
 # Dependencies stage
 # ================================
-
 FROM base AS deps
 
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies with npm ci
+# Install dependencies with npm ci for faster, reliable builds
 RUN npm ci --only=production && npm cache clean --force
 
 # ================================
 # Production stage
 # ================================
-
 FROM base AS runner
-
-# Set production environment
-ENV NODE_ENV=production
-ENV PORT=8000
 
 # Copy node_modules from deps stage
 COPY --from=deps --chown=nodejs:nodejs /app/node_modules ./node_modules
@@ -47,5 +42,5 @@ EXPOSE 8000
 # Use dumb-init to handle signals properly
 ENTRYPOINT ["dumb-init", "--"]
 
-# Start the server with delay
+# Start the server
 CMD ["node", "server.js"]

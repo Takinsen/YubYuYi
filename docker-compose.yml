@@ -28,7 +28,13 @@ services:
       - "8000:8000"
     environment:
       NODE_ENV: production
-      NEXT_PUBLIC_API_URL: http://localhost:8000
+      PORT: 8000
+      MONGO_URI: mongodb://admin:password123@mongodb:27017/yubyuyi?authSource=admin
+      ACCESS_SECRET: TRALALELOTRALALA
+      ACCESS_EXPIRE: 7d
+      REFRESH_SECRET: BOMBARDINOCROCODILO
+      REFRESH_EXPIRE: 7d
+      PROJECT_NAME: YubYuYi        
     depends_on:
       - mongodb
     networks:
@@ -47,14 +53,6 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: production
-      PORT: 8000
-      FRONTEND_URL: localhost:3000
-      MONGO_URI: mongodb://admin:password123@mongodb:27017/yubyuyi?authSource=admin
-      ACCESS_SECRET: TRALALELOTRALALA
-      ACCESS_EXPIRE: 7d
-      REFRESH_SECRET: BOMBARDINOCROCODILO
-      REFRESH_EXPIRE: 7d
-      PROJECT_NAME: YubYuYi  
     depends_on:
       - backend
     networks:
