@@ -34,7 +34,7 @@ const CreateLot = () => {
 
   const varietyOptions = [
     { value: 'MONTHONG', label: 'หมอนทอง (Monthong)' },
-    { value: 'KANYAO', label: 'ก้่านยาว (Kanyao)' },
+    { value: 'KANYAO', label: 'ก้านยาว (Kanyao)' },
     { value: 'CHANEE', label: 'ชะนี (Chanee)' },
     { value: 'PUANGMANEE', label: 'พวงมะนี (Puangmanee)' },
   ];

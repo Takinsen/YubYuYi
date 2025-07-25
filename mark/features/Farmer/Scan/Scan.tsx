@@ -41,7 +41,7 @@ export default function Scan() {
         <QrScanner ref={scannerRef} onScan={handleScan} />
         { id !== '' &&
       <div className={style.ActionContainer}>
-        <Button variant='green-md' onClick={handleContinue}>ดุข้อมูล</Button>
+        <Button variant='green-md' onClick={handleContinue}>ดูข้อมูล</Button>
       </div>
       }
       <div className={style.BackButtonContainer}>

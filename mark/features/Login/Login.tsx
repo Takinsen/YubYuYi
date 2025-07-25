@@ -36,7 +36,7 @@ const Login = () => {
       <img className={style.subLogo} src="/images/BlockfintWhite.svg"/>
       <div className={style.subWhiteText}>Powered by</div>
       <div className={style.ContainerCard}>
-        <h2 className={style.Title}>Hello Agian!</h2>
+        <h2 className={style.Title}>Hello Again!</h2>
         <div onClick={handleBack} className={style.BackButton}>{'<-'} Back</div>
         <div className={style.InputLable}>Username</div>
         <TextInput
